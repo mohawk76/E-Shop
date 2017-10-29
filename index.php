@@ -16,14 +16,19 @@
 	require_once('Products.php');
 	require_once('ProductBuilder.php');
 	require_once('ProductTemplate.php');
-
+	
+	$config = include('config.php');
 	$connect = Database::getInstance();
 	$session = Session::getInstance();
 	$get = Get::getInstance();
 	
 	try
 	{
-		$connect->connect('127.0.0.1', 'admin', '', 'test');//connecting to MySQL database
+		$connect->connect(
+				$config['database']['host'],
+				$config['database']['user'], 
+				$config['database']['pass'],
+				$config['database']['name']);//connecting to MySQL database
 	} 
 	catch (connectFailedException $ex) 
 	{
