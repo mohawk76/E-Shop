@@ -6,16 +6,14 @@ abstract class Model{
  
     public function  __construct()
 	{
-        try 
-		{
-            require('../Config/dbConfig.php');
-            $this->pdo=new PDO('mysql:host='.$host.';dbname='.$dbase, $user, $pass);
-            $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        }
-        catch(DBException $e) 
-		{
-            echo 'The connect can not create: ' . $e->getMessage();
-        }
+        $dbConfig=require('../Config/dbConfig.php');
+        $this->pdo=Database::getInstance();
+        $this->pdo->connect(
+		$dbConfig['type'],
+		$dbConfig['host'],
+		$dbConfig['user'], 
+		$dbConfig['pass'],
+		$dbConfig['name']);//connecting to MySQL database
     }
 	
     public function loadModel($name, $path='../Models/') {
@@ -48,11 +46,10 @@ abstract class Model{
         if($limit!=NULL)
             $query=$query.' LIMIT '.$limit;
  
-        $select=$this->pdo->query($query);
+        $select=$this->pdo->sendQuery($query);
         foreach ($select as $row) {
             $data[]=$row;
         }
-        $select->closeCursor();
  
         return $data;
     }

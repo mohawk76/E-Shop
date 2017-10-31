@@ -17,23 +17,18 @@
 	require_once('Classes/ProductBuilder.php');
 	require_once('Classes/ProductTemplate.php');
 	
-	$config = include('Config/dbConfig.php');
+	$dbConfig = include('Config/dbConfig.php');
 	$connect = Database::getInstance();
 	$session = Session::getInstance();
 	$get = Get::getInstance();
 	
-	try
-	{
-		$connect->connect(
-				$config['database']['host'],
-				$config['database']['user'], 
-				$config['database']['pass'],
-				$config['database']['name']);//connecting to MySQL database
-	} 
-	catch (connectFailedException $ex) 
-	{
-		echo $ex->getMessage();
-	}
+	$connect->connect(
+			$dbConfig['type'],
+			$dbConfig['host'],
+			$dbConfig['user'], 
+			$dbConfig['pass'],
+			$dbConfig['name']);//connecting to MySQL database
+		
     $productName = $get->searched;
     $productCategory = $get->category;
    
@@ -54,14 +49,14 @@
     $select = array("Nazwa", "Opis", "Cena", "id_producent", "ID_Image");
 	
     //Search and get result
-    $result = $search->search($select, $searchArray)->getResult('Nazwa', $productName);
-	
+    $result = $search->search($select, $searchArray);
 	$products = new productsCollection();
 	
     //Parsing search result to product and add to productsCollection
 	$builder = new ProductBuilder($connect);
-	foreach ($result as $row) {
-	$products->addItem($builder->createProduct($row));
+	foreach ($result as $row) 
+	{
+		$products->addItem($builder->createProduct($row));
 	}
 ?>
 <div class="container">
@@ -79,9 +74,9 @@
                         if($connect->isConnected())
                         {
                             $result = $connect->sendQuery('SELECT Nazwa, id_kategorii FROM kategorie;');
-                            while ($row = $result->fetch_row()) 
+                            foreach($result as $row) 
                             {   
-                                (new selectOption($row[0],$row[1]))->printHTML($productCategory);
+								(new selectOption($row['Nazwa'],$row['id_kategorii']))->printHTML($productCategory);
                             }
                         }
                     ?>
@@ -95,12 +90,6 @@
 
     <div class="products">
         <div class="toogle-menu" onclick="openNav()"></div>
-        <div class="menu" id="menu">
-            <div class="closebtn" onclick="closeNav()"></div>
-            <div class="menuitem">Strona główna</div>
-            <div class="menuitem">Gry</div>
-            <div class="menuitem">Łowcy</div>
-        </div>
         <div class="content">
 	<?php
 	$display = $products->toArray();
@@ -141,6 +130,13 @@
     </div>
 </div>
     
+<div class="menu" id="menu">
+    <div class="closebtn" onclick="closeNav()"></div>
+    <div class="menuitem">Strona główna</div>
+    <div class="menuitem">Gry</div>
+    <div class="menuitem">Łowcy</div>
+</div>
+	
 <script>
     function openNav() {
         $(".menu").css("width", 250+"px");

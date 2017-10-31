@@ -1,12 +1,4 @@
 <?php
-    class connectFailedException extends Exception
-    {
-        const MSG = '<script>alert("Nie udało się połączyć z bazą danych.");</script>';
-        public function __construct()
-        {
-            parent::__construct(self::MSG);
-        }
-    }
     
     /*
      * Class Database
@@ -20,11 +12,9 @@
         private function __construct() {}
         private function __clone() {}
         
-        public function __destruct() {
-            if(!$this->database->connect_errno)
-            {
-                $this->database->close();
-            }
+        public function __destruct() 
+		{
+			unset($this->database);
         }
         
         public static function getInstance(){
@@ -34,25 +24,43 @@
             return self::$instance;
         }
         
-        public function connect($dbAdress, $dbLogin, $dbPassword, $dbName)
+        public function connect($dbType,$dbAdress, $dbLogin, $dbPassword, $dbName)
         {
-            $this->database = new mysqli($dbAdress, $dbLogin, $dbPassword, $dbName);
-            
-            if($this->database->connect_errno)
-            {
-                unset($this->database);
-                throw new connectFailedException();
-            } 
+			$dsn = "$dbType:dbname=$dbName;host=$dbAdress";
+            try 
+			{
+				$this->database = new PDO($dsn, $dbLogin, $dbPassword);
+				$this->database->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+				$this->database->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+			} 
+			catch (PDOException $e) 
+			{
+				echo 'Connection failed: ' . $e->getMessage();
+				unset($this->database);
+			}
         }
         
         public function sendQuery($query)
         {
-            return $this->database->query($query);
+			if(strpos(strtolower($query), 'select')!==False)
+			{
+				$stmt = $this->database->query($query);
+				$result = $stmt->fetchAll();
+				$stmt->closeCursor();
+				unset($stmt);
+				return $result;
+			}
+			else 
+			{
+				$stmt = $this->database->exec($query);
+				return $stmt;
+			}
+            
         }
         
         public function isConnected()
         {
-            if($this->database)
+            if(isset($this->database))
             {
                 return true;
             }

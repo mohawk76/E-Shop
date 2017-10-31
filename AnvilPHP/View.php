@@ -57,13 +57,7 @@ abstract class View
 	{
         $this->$name=$value;
     }
-    /**
-     * It gets data.
-     *
-     * @param string $name
-     *
-     * @return mixed
-     */
+	
     public function get($name) {
         return $this->$name;
     }

@@ -16,14 +16,14 @@ class ProductBuilder {
 	{
 		if ($row["ID_Image"] != NULL) 
         {
-            $imagePath = $this->connect->sendQuery((new Select('Path'))->From('images')->Where('id_image = '.$row['ID_Image']))->fetch_row()[0];
+            $imagePath = $this->connect->sendQuery((new Select('Path'))->From('images')->Where('id_image = '.$row['ID_Image']))[0]['Path'];
         }
         else
         {
             $imagePath = "";
         }
 		
-		$company = $this->connect->sendQuery((new Select('nazwa'))->From('producenci')->Where('id_producent = '.$row["id_producent"]))->fetch_row()[0];
+		$company = $this->connect->sendQuery((new Select('nazwa'))->From('producenci')->Where('id_producent = '.$row["id_producent"]))[0]['nazwa'];
 		
 		if(product::tryParse(array($row["Nazwa"], $row["Opis"], $company, $row["Cena"], $imagePath), $item))
 		{

@@ -1,5 +1,4 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto');
-
 body{
     margin: 0 auto;
     background-color: ghostwhite;
@@ -12,12 +11,15 @@ body{
 }
 
 .header{
-    position: relative;
-    height: 200px;
+    position: fixed;
+	top: 0;
+	z-index: 2;
+    height: 150px;
     width: 100%;
     border-bottom:  1px ridge #000; 
 	display: inline-block;
 	box-sizing: border-box;
+	background-color: ghostwhite;
 }
 
 .logo{
@@ -35,8 +37,8 @@ body{
 
 .searchForm{
     position: relative;
-    left: 10%;
-    top: 100px;
+    left: 200px;
+    top: 65px;
     width: 420px;
     height: 30px;
     overflow: hidden;
@@ -86,8 +88,8 @@ body{
 
 .shopCart{
     position: relative;
-    top: 50px;
-    left: 50%;
+    top: 20px;
+    left: 1200px;
     width: 60px;
     height: 60px;
     content: url(images/ic_shopping_cart_black.svg);
@@ -102,6 +104,7 @@ body{
 }
 
 .menu{
+	margin-top: 150px;
     box-sizing: border-box;
     height: 100%;
     width: 0;
@@ -166,6 +169,7 @@ body{
 }
 
 .products{
+	margin-top: 150px!important;
     width: 1750px;
 	/*leight: 100%;*/
     margin: 0;
