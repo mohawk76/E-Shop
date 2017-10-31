@@ -48,7 +48,8 @@ class UserService
         
         if ($stmt->num_rows > 0) 
 		{
-            $user = $stmt-->fetch_assoc();
+            $user = $stmt->fetch_assoc();
+			$stmt->close();
             if ($password == $user['password']) 
 			{
                 return $user;
@@ -57,5 +58,20 @@ class UserService
         return false;
     }
 	
+	public function isLogged()
+	{
+		if(isset($_SESSION['user']))
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
 	
+	public function register($login, $password, $email, $name, $surname, $postcode, $city, $address)
+	{
+		
+	}
 }

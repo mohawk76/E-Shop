@@ -6,18 +6,18 @@
 	<meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="design-style.css" />
-	<link rel="stylesheet" type="text/css" href="productTemplate.css">
-    <script type="text/javascript" src="jquery-3.2.1.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="Templates/productTemplate.css">
+    <script type="text/javascript" src="JS/jquery-3.2.1.min.js"></script>
 </head>
 
 <body>
 <?php
 	require_once('AnvilPHP/AnvilPHP.php');
-	require_once('Products.php');
-	require_once('ProductBuilder.php');
-	require_once('ProductTemplate.php');
+	require_once('Classes/Products.php');
+	require_once('Classes/ProductBuilder.php');
+	require_once('Classes/ProductTemplate.php');
 	
-	$config = include('config.php');
+	$config = include('Config/dbConfig.php');
 	$connect = Database::getInstance();
 	$session = Session::getInstance();
 	$get = Get::getInstance();
@@ -113,7 +113,7 @@
             echo 'Lista znalezionych przedmiotów:<br>';
             foreach ($display as $displayed)
 			{
-				(new ProductTemplate("productTemplate.html"))->set($displayed)->printHTML();
+				(new ProductTemplate("Templates/productTemplate.html"))->set($displayed)->printHTML();
 			}
         }
         else
@@ -126,7 +126,7 @@
     {
          foreach ($display as $displayed)
 			{
-				(new ProductTemplate("productTemplate.html"))->set($displayed)->printHTML();
+				(new ProductTemplate("Templates/productTemplate.html"))->set($displayed)->printHTML();
 			}
     }
 	
