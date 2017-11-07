@@ -1,9 +1,10 @@
 <?php
-require_once 'PrinterHTML.php';
 
-class FileExistEception extends Exception{}
+namespace AnvilPHP;
 
-class Template implements printerHTML{
+class FileExistEception extends \Exception{}
+
+class Template implements \AnvilPHP\HTMLGenerators\printerHTML{
 	protected $file;	
 	protected $values;
 	

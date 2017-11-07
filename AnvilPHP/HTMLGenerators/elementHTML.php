@@ -1,8 +1,6 @@
 <?php
-interface printerHTML
-{
-    public function printHTML();
-}
+
+namespace AnvilPHP\HTMLGenerators;
 
 abstract class elementHTML implements printerHTML {
     public $id;

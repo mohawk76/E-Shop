@@ -1,5 +1,9 @@
 <?php 
-require_once 'Database.php';
+
+namespace AnvilPHP;
+
+use AnvilPHP\Database\Database;
+
 class SearchEngine{
     
     private $database;
@@ -25,7 +29,7 @@ class SearchEngine{
     //generate SQL Query and return result
     public function search($select_args=array(), $where_args=array(), $order_args=array(), $dbOffset = 0)
     {
-        $query = (new Select($select_args))->From($this->tableName)->Where($where_args)->OrderBy($order_args)->Limit($this->limit, $dbOffset);
+        $query = (new \AnvilPHP\Database\Select($select_args))->From($this->tableName)->Where($where_args)->OrderBy($order_args)->Limit($this->limit, $dbOffset);
 
         //echo "$query<br>";
         $result = $this->database->sendQuery($query);

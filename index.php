@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html>
-
 <head>
     <title>E-Shop Design</title>
 	<meta charset="utf-8">
@@ -12,15 +11,12 @@
 
 <body>
 <?php
-	require_once('AnvilPHP/AnvilPHP.php');
-	require_once('Classes/Products.php');
-	require_once('Classes/ProductBuilder.php');
-	require_once('Classes/ProductTemplate.php');
+	require('vendor/autoload.php');
 	
 	$dbConfig = include('Config/dbConfig.php');
-	$connect = Database::getInstance();
-	$session = Session::getInstance();
-	$get = Get::getInstance();
+	$connect = AnvilPHP\Database\Database::getInstance();
+	$session = AnvilPHP\Session::getInstance();
+	$get = AnvilPHP\Get::getInstance();
 	
 	$connect->connect(
 			$dbConfig['type'],
@@ -29,11 +25,11 @@
 			$dbConfig['pass'],
 			$dbConfig['name']);//connecting to MySQL database
 		
-    $productName = $get->searched;
-    $productCategory = $get->category;
+    $productName = $get->filteredInput('searched');
+    $productCategory = $get->filteredInput('category');
    
    //Create SearchEngine object and Generating search method's arguments
-    $search = new SearchEngine($connect, "produkty");
+    $search = new AnvilPHP\SearchEngine($connect, "produkty");
     $searchArray= array();
    
    if(!empty($productName))
@@ -50,10 +46,10 @@
 	
     //Search and get result
     $result = $search->search($select, $searchArray);
-	$products = new productsCollection();
+	$products = new Shop\Product\productsCollection();
 	
     //Parsing search result to product and add to productsCollection
-	$builder = new ProductBuilder($connect);
+	$builder = new Shop\Product\ProductBuilder($connect);
 	foreach ($result as $row) 
 	{
 		$products->addItem($builder->createProduct($row));
@@ -76,7 +72,7 @@
                             $result = $connect->sendQuery('SELECT Nazwa, id_kategorii FROM kategorie;');
                             foreach($result as $row) 
                             {   
-								(new selectOption($row['Nazwa'],$row['id_kategorii']))->printHTML($productCategory);
+								(new AnvilPHP\HTMLGenerators\Form\Option($row['Nazwa'],$row['id_kategorii']))->printHTML($productCategory);
                             }
                         }
                     ?>
@@ -102,7 +98,7 @@
             echo 'Lista znalezionych przedmiotów:<br>';
             foreach ($display as $displayed)
 			{
-				(new ProductTemplate("Templates/productTemplate.html"))->set($displayed)->printHTML();
+				(new Shop\Product\ProductTemplate("Templates/productTemplate.html"))->set($displayed)->printHTML();
 			}
         }
         else
@@ -115,7 +111,7 @@
     {
          foreach ($display as $displayed)
 			{
-				(new ProductTemplate("Templates/productTemplate.html"))->set($displayed)->printHTML();
+				(new Shop\Product\ProductTemplate("Templates/productTemplate.html"))->set($displayed)->printHTML();
 			}
     }
 	

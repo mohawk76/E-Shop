@@ -1,61 +1,35 @@
 <?php
 
+namespace AnvilPHP;
+
 abstract class Controller{
  
-    public function redirect($url) 
+	/**
+	 * Redirects to the specified address
+	 * @param string $url specified address
+	 * @return void
+	 */
+    public function redirect(string $url) 
 	{
         header("location: ".$url);
     }
-
-    public function loadView($name, $path='../Views/') 
-	{
-        $path=$path.$name.'.php';
-        $name=$name.'View';
-        try 
-		{
-            if(is_file($path)) 
-			{
-                require $path;
-                $ob=new $name();
-            } 
-			else 
-			{
-                throw new Exception('Can not open view '.$name.' in: '.$path);
-            }
+	
+	/**
+     * Generates URL
+     * @param $name
+     * @param null $data
+     * @return bool|string
+     */
+ 
+    public function generateUrl($name, $data = null)
+    {
+        $router = new Router('http://' . $_SERVER["SERVER_NAME"] . $_SERVER["REQUEST_URI"]);
+        $collection = $router->getCollection();
+        $route = $collection->get($name);
+        if (isset($route)) {
+            return $route->geneRateUrl($data);
         }
-        catch(Exception $e) {
-            echo $e->getMessage().'<br />
-                File: '.$e->getFile().'<br />
-                Code line: '.$e->getLine().'<br />
-                Trace: '.$e->getTraceAsString();
-            exit;
-        }
-        return $ob;
+        return false;
     }
 	
-    public function loadModel($name, $path='../Models/')
-	{
-        $path=$path.$name.'.php';
-        $name=$name.'Model';
-        try {
-            if(is_file($path)) 
-			{
-                require $path;
-                $ob=new $name();
-            }
-			else
-			{
-                throw new Exception('Can not open model '.$name.' in: '.$path);
-            }
-        }
-        catch(Exception $e) 
-		{
-            echo $e->getMessage().'<br />
-                File: '.$e->getFile().'<br />
-                Code line: '.$e->getLine().'<br />
-                Trace: '.$e->getTraceAsString();
-            exit;
-        }
-        return $ob;
-    }
 }

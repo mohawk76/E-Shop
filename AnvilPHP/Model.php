@@ -1,5 +1,7 @@
 <?php
 
+namespace AnvilPHP;
+
 abstract class Model{
 
     protected $pdo;
@@ -37,17 +39,14 @@ abstract class Model{
         return $ob;
     }
 
-    public function select($from, $select='*', $where=NULL, $order=NULL, $limit=NULL) {
-        $query='SELECT '.$select.' FROM '.$from;
-        if($where!=NULL)
-            $query=$query.' WHERE '.$where;
-        if($order!=NULL)
-            $query=$query.' ORDER BY '.$order;
-        if($limit!=NULL)
-            $query=$query.' LIMIT '.$limit;
+    public function select($from, $select='*', $where=NULL, $order=NULL, $limit=NULL)
+	{
+        $query= (new Select($select))->From($from)->Where($where)->OrderBy($order)->Limit($limit);
  
         $select=$this->pdo->sendQuery($query);
-        foreach ($select as $row) {
+		
+        foreach ($select as $row) 
+		{
             $data[]=$row;
         }
  

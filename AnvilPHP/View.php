@@ -1,5 +1,7 @@
 <?php
 
+namespace AnvilPHP;
+
 abstract class View
 {
     public function loadModel($name, $path='model/') 
@@ -52,13 +54,35 @@ abstract class View
             exit;
         }
     }
+	
+	public function renderJSON($data)
+	{
+        header('Content-Type: application/json');
+        echo json_encode($data);
+        exit;
+    }
 
     public function set($name, $value) 
 	{
         $this->$name=$value;
     }
 	
-    public function get($name) {
+	public function __set($name, $value)
+	{
+        $this->$name=$value;
+    }
+	
+    public function get($name) 
+	{
         return $this->$name;
+    }
+	
+	public function __get($name) 
+	{
+        if(isset($this->$name))
+		{
+			return $this->$name;
+		}  
+        return null;
     }
 }

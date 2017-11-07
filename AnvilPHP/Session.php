@@ -1,4 +1,7 @@
 <?php
+
+namespace AnvilPHP;
+
 class Session{
     
     static private $expiryTime;
