@@ -3,7 +3,7 @@
 namespace AnvilPHP;
 
 /**
- * Can contains values any type
+ * Can contains values mixed
  */
 class Collection 
 {
@@ -15,7 +15,7 @@ class Collection
     
 	/**
 	 * Creates Collection
-	 * @param any type
+	 * @param mixed(optional)
 	 * @return void
 	 */
     public function __construct() //getting all args and add to array
@@ -32,13 +32,13 @@ class Collection
 	
     /**
 	 * Add item to collection
-	 * @param any type $obj
-	 * @param int|String $key
+	 * @param mixed $obj
+	 * @param int|String $key(optional)
 	 * @throws Exception
 	 * @return void
 	 */
     public function addItem($obj, $key = null) 
-        {
+    {
         if ($key === null) 
         {
             $this->items[] = $obj;
@@ -47,7 +47,7 @@ class Collection
         {
             if (isset($this->items[$key])) 
             {
-                throw new Exception("Index $key jest w użyciu.");
+                throw new \Exception("Index $key jest w użyciu.");
             }
             else 
             {
@@ -70,7 +70,7 @@ class Collection
         }
         else 
         {
-            throw new Exception("Indeks $key nie istnieje.");
+            throw new \Exception("Indeks $key nie istnieje.");
         }
     }
 
@@ -78,7 +78,7 @@ class Collection
 	 * Returns the item from the collection that is under the $key
 	 * @param int|String $key
 	 * @throws Exception
-	 * @return any type
+	 * @return mixed
 	 */
     public function getItem($key) 
     {
@@ -88,7 +88,7 @@ class Collection
         }
         else 
         {
-            throw new Exception("Indeks $key nie istnieje.");
+            throw new \Exception("Indeks $key nie istnieje.");
         }
     }
     
@@ -113,16 +113,16 @@ class Collection
     
 	/**
 	 * Returns the first item of the collection
-	 * @return any type
+	 * @return mixed
 	 */
     public function getFirstItem()
     {
-        return $this->items[0];
+        return reset($this->items);
     }
     
     /**
 	 * Returns the last item of the collection
-	 * @return any type
+	 * @return mixed
 	 */
     public function getLastItem()
     {
@@ -156,5 +156,29 @@ class Collection
 	public function toArray()
 	{
 		return $this->items;
+	}
+	
+	public function __get($key) 
+	{
+		if (isset($this->items[$key])) 
+        {
+            return $this->items[$key];
+        }
+        else 
+        {
+            throw new Exception("Indeks $key nie istnieje.");
+        }
+	}
+	
+	public function __set($key, $obj) 
+	{
+        if (isset($this->items[$key])) 
+        {
+            throw new Exception("Index $key jest w użyciu.");
+        }
+        else 
+        {
+            $this->items[$key] = $obj;
+        }
 	}
 }

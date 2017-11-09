@@ -92,9 +92,10 @@ class UserService
 	
 	/**
 	 * Check that the user is logged in
+	 * @static
 	 * @return boolean
 	 */
-	public function isLogged()
+	public static function isLogged()
 	{
 		if(isset(Session::getInstance()->user))
 		{
@@ -120,6 +121,33 @@ class UserService
 	 */
 	public function register(string $login, string $password, string $email, string $name, string $surname, string $postcode, string $city, string $address)
 	{
+		if(strlen($login) > 32)
+		{
+			echo 'Za długi login';
+			die();
+		}
+		else if(strlen($login) < 6)
+		{
+			echo 'Za krótki login';
+			die();
+		}
 		
+		if(strlen($password) < 6)
+		{
+			echo 'Twoje hasło jest za krótkie"';
+			die();
+		}
+		
+		if(filter_input($email, FILTER_VALIDATE_EMAIL))
+		{
+			echo 'Zły format e-mail\'a"';
+			die();
+		}
+		
+		$password = password_hash($password, PASSWORD_BCRYPT);
+		
+		(new \AnvilPHP\Database\Insert("Users"))->Values(func_get_args());
+		
+		echo 'Pomyślnie zarejestrowano';
 	}
 }

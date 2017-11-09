@@ -11,12 +11,22 @@ class Option extends \AnvilPHP\HTMLGenerators\elementHTML
         $this->text = $text;
         $this->value = $value;
     }
-    
-    public function printHTML($selected="")
-    {
-        print('<option value="'.$this->value.'" ');
+	
+	public function getOption($selected="")
+	{
+		$result = '<option value="'.$this->value.'" ';
+		
         if($selected== $this->value)
-            print('selected="selected" ');
-        print('>'.$this->text.'</option>');
+            $result .= 'selected="selected" ';
+		
+        $result .= '>'.$this->text.'</option>';
+		
+		return $result;
+	}
+
+
+	public function printHTML($selected="")
+    {
+        print(getOption($selected));
     }
 }

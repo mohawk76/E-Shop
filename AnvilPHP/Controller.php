@@ -1,7 +1,9 @@
 <?php
 
 namespace AnvilPHP;
-
+/**
+ * @abstract
+ */
 abstract class Controller{
  
 	/**
@@ -17,19 +19,26 @@ abstract class Controller{
 	/**
      * Generates URL
      * @param $name
-     * @param null $data
+     * @param string $data
      * @return bool|string
      */
- 
     public function generateUrl($name, $data = null)
     {
-        $router = new Router('http://' . $_SERVER["SERVER_NAME"] . $_SERVER["REQUEST_URI"]);
-        $collection = $router->getCollection();
-        $route = $collection->get($name);
-        if (isset($route)) {
-            return $route->geneRateUrl($data);
-        }
-        return false;
+        $router = new Router('http://' . $_SERVER["SERVER_NAME"] . $_SERVER["REQUEST_URI"]);//Creating router
+        $collection = $router->getCollection();//Get route collection
+		
+		try
+		{
+			$route = $collection->getItem($name);//Get route
+		}
+		catch(Exception $ex)
+		{	
+			http_response_code(404);
+			print('<h1>404 Not Found</h1>');
+			die();
+		}
+		
+        return $route->generateUrl($data);
     }
 	
 }

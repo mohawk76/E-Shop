@@ -4,85 +4,34 @@ namespace AnvilPHP;
 
 abstract class View
 {
-    public function loadModel($name, $path='model/') 
+	
+	public function generateUrl($name, $data=null) 
 	{
-        $path=$path.$name.'.php';
-        $name=$name.'Model';
-        try 
+        $router = new Router('http://' . $_SERVER["SERVER_NAME"] . $_SERVER["REQUEST_URI"]);//Creating router
+        $collection = $router->getCollection();//Get route collection
+		
+		try
 		{
-            if(is_file($path)) 
-			{
-                require $path;
-                $ob=new $name();
-            } 
-			else 
-				{
-                throw new Exception('Can not open model '.$name.' in: '.$path);
-            }
-        }
-        catch(Exception $e) 
-		{
-            echo $e->getMessage().'<br />
-                File: '.$e->getFile().'<br />
-                Code line: '.$e->getLine().'<br />
-                Trace: '.$e->getTraceAsString();
-            exit;
-        }
-        return $ob;
+			$route = $collection->getItem($name);//Get route
+		}
+		catch(Exception $ex)
+		{	
+			http_response_code(404);
+			print('<h1>404 Not Found</h1>');
+			die();
+		}
+		
+        return $route->generateUrl($data);
     }
-
-    public function render($name, $path='templates/') 
-	{
-        $path=$path.$name.'.html.php';
-        try 
-		{
-            if(is_file($path))
-			{
-                require $path;
-            }
-			else 
-			{
-                throw new Exception('Can not open template '.$name.' in: '.$path);
-            }
-        }
-        catch(Exception $e)
-		{
-            echo $e->getMessage().'<br />
-                File: '.$e->getFile().'<br />
-                Code line: '.$e->getLine().'<br />
-                Trace: '.$e->getTraceAsString();
-            exit;
-        }
+	
+    public function renderHTML($template) {
+        print($template);
     }
 	
 	public function renderJSON($data)
 	{
         header('Content-Type: application/json');
-        echo json_encode($data);
+		print(json_encode($data));
         exit;
-    }
-
-    public function set($name, $value) 
-	{
-        $this->$name=$value;
-    }
-	
-	public function __set($name, $value)
-	{
-        $this->$name=$value;
-    }
-	
-    public function get($name) 
-	{
-        return $this->$name;
-    }
-	
-	public function __get($name) 
-	{
-        if(isset($this->$name))
-		{
-			return $this->$name;
-		}  
-        return null;
     }
 }

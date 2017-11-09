@@ -12,6 +12,9 @@ class Get{
 	 */
     static private $instance;
     
+	private function __construct() {}
+	private function __clone() {}
+	
 	/**
 	 * If an object is not created, it creates and returns it. 
 	 * Otherwise it returns only reference to this object.
@@ -29,7 +32,7 @@ class Get{
 	/**
 	 * Reurns value from _GET[$name]
 	 * @param string $name
-	 * @return any type
+	 * @return mixed
 	 */
     public function __get($name) 
     {
@@ -40,7 +43,7 @@ class Get{
 	/**
 	 * Save value into _GET[$name]
 	 * @param string $name
-	 * @param any type $value
+	 * @param mixed $value
 	 */
     public function __set($name, $value) 
 	{
@@ -51,14 +54,14 @@ class Get{
 	 * Reurns filtered value from _GET[$name]
 	 * If it detects illegal characters, it returns to the main page 
 	 * @param string $name
-	 * @return any type
+	 * @return mixed
 	 */
 	public function filteredInput($name)
 	{
 		$result = filter_input(INPUT_GET, $name);
 		if(preg_match('/[^\p{L}\d @]/u', $result))
 		{
-			header("Location: index.php");
+			header("Location: ".HTTP_SERVER);
 			die();
 		}
         return trim($result);

@@ -2,14 +2,30 @@
 
 namespace AnvilPHP;
 
+/**
+ * Wrapper for SESSION
+ */
 class Session{
-    
+    /**
+	 * Determines the time after the session will expire
+	 * @var int
+	 */
     static private $expiryTime;
+	
+	/**
+	 * The only class object
+	 * @var Session 
+	 */
     private static $instance;
     
     private function __construct() {}
     private function __clone() {}
 
+	/**
+	 * 
+	 * @param int $expiryTime(optional)
+	 * @return Session
+	 */
     static public function getInstance($expiryTime = 1800)
     {
         if (!isset(self::$instance)) 
@@ -32,6 +48,11 @@ class Session{
         return self::$instance;
     }
     
+	/**
+	 * 
+	 * @param int $expiryTime
+	 * @return void
+	 */
     public function start($expiryTime)
     {
         if (!$this->isActive())
@@ -56,15 +77,23 @@ class Session{
                 $_SESSION['CREATED'] = time();  
             }
         }
-        
-        return $this->sessionState;
     }
 
+	/**
+	 * 
+	 * @param String $key
+	 * @return mixed
+	 */
     public function __get($key)
     {
          return isset($_SESSION[$key])? $_SESSION[$key] : NULL;
     }
     
+	/**
+	 * 
+	 * @param String $key
+	 * @return ref to mixed
+	 */
     public function &getRef($key)
     {
         if (isset($_SESSION[$key])) 
@@ -78,7 +107,14 @@ class Session{
         return $result;
     }
 
-        public function __set($key, $value)
+	/**
+	 * 
+	 * @param String $key
+	 * @param mixed $value
+	 * @throws \InvalidArgumentException
+	 * @return void
+	 */
+    public function __set($key, $value)
     {
         if(!isset($_SESSION[$key]))
         {
@@ -86,20 +122,34 @@ class Session{
         }
         else
         {
-            return FALSE;
+			throw new \InvalidArgumentException("The key is in use");
         }
     }
     
+	/**
+	 * 
+	 * @param string $name
+	 * @return boolean
+	 */
     public function __isset($name) 
     {
         return isset($_SESSION[$name]);
     }
     
+	/**
+	 * 
+	 * @param String $name
+	 * @return void
+	 */
     public function __unset($name) 
     {
         unset($_SESSION[$name]);
     }
     
+	/**
+	 * Destroys Session
+	 * @return boolean
+	 */
     public function destroy()
     {
         if ($this->isActive())
@@ -111,6 +161,10 @@ class Session{
         return false;
     }
 
+	/**
+	 * Checks if the session has expired 
+	 * @return boolean
+	 */
     private function isExpired()
     {
         if ((isset($_SESSION['LAST_ACTIVITY'])) && (time() - $_SESSION['LAST_ACTIVITY'] > self::$expiryTime))
@@ -120,6 +174,10 @@ class Session{
         return FALSE;
     }
     
+	/**
+	 * Checks if the session is active
+	 * @return boolean
+	 */
     private function isActive()
     {
          return session_status() === PHP_SESSION_ACTIVE ? TRUE : FALSE;

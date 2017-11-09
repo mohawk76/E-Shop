@@ -172,7 +172,7 @@ class Route
 	 */
     public function generateUrl($data)
     {
-        if (is_array($data)) {
+        if (is_array($data) && sizeof($data)>0) {
             $key_data = array_keys($data);
             foreach ($key_data as $key) {
                 $data2['<' . $key . '>'] = $data[$key];

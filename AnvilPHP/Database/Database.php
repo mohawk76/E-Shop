@@ -48,16 +48,30 @@ use \PDO;
         {
 			if(strpos(strtolower($query), 'select')!==False)
 			{
-				$stmt = $this->database->query($query);
-				$result = $stmt->fetchAll();
-				$stmt->closeCursor();
-				unset($stmt);
-				return $result;
+				try
+				{
+					$stmt = $this->database->query($query);
+					$result = $stmt->fetchAll();
+					$stmt->closeCursor();
+					unset($stmt);
+					return $result;
+				}
+				catch (Exception $ex)
+				{
+					throw $ex;
+				}
 			}
 			else 
 			{
-				$stmt = $this->database->exec($query);
-				return $stmt;
+				try
+				{
+					$stmt = $this->database->exec($query);
+					return $stmt;
+				}
+				catch (Exception $ex)
+				{
+					throw $ex;
+				}
 			}
             
         }

@@ -184,7 +184,7 @@ class Router
         $parsed_url=preg_replace("#$trim[0]#", '', $parsed_url, 1);
 		
         foreach ($route->getParams() as $key => $param) {
-            if($parsed_url[0]=='/') {
+            if(!empty($parsed_url[0]) && $parsed_url[0]=='/') {
                 $parsed_url = substr($parsed_url, 1);
             }
             preg_match("#$param#", $parsed_url, $results);

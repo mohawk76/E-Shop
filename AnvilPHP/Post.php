@@ -11,8 +11,16 @@ class Post{
 	 * @var Post
 	 */
     static private $instance;
-    
-    public static function getInstance()
+	
+	private function __construct() {}
+	private function __clone() {}
+	
+	/**
+	 * If an object is not created, it creates and returns it. 
+	 * Otherwise it returns only reference to this object.
+	 * @return Post
+	 */
+	public static function getInstance()
     {
         if(!isset(self::$instance))
         {
@@ -21,17 +29,33 @@ class Post{
         return self::$instance;
     }
 
+	/**
+	 * Reurns value from _POST[$name]
+	 * @param string $name
+	 * @return mixed
+	 */
     public function __get($name) 
     {
         $result = filter_input(INPUT_POST, $name);
         return $result;
     }  
 	
+	/**
+	 * Save value into _POST[$name]
+	 * @param string $name
+	 * @param mixed $value
+	 */
 	public function __set($name, $value) 
 	{
 		$_POST[$name] = $value;
 	}
 	
+	/**
+	 * Reurns filtered value from _POST[$name]
+	 * If it detects illegal characters, it returns to the main page 
+	 * @param string $name
+	 * @return mixed
+	 */
 	public function filteredInput($name)
 	{
 		$result = filter_input(INPUT_POST, $name);

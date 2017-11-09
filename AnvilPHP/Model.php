@@ -4,52 +4,25 @@ namespace AnvilPHP;
 
 abstract class Model{
 
-    protected $pdo;
+	/**
+	 * Holds connection with database
+	 * @var Database
+	 */
+    protected $database;
  
+	/**
+     * Connects with the database.
+     * @return void
+     */
     public function  __construct()
 	{
-        $dbConfig=require('../Config/dbConfig.php');
-        $this->pdo=Database::getInstance();
-        $this->pdo->connect(
+        $dbConfig=require(DIR_CONFIG.'dbConfig.php');//Get login information from the configuration file
+        $this->database= Database\Database::getInstance();//Get reference to database
+        $this->database->connect(
 		$dbConfig['type'],
 		$dbConfig['host'],
 		$dbConfig['user'], 
 		$dbConfig['pass'],
-		$dbConfig['name']);//connecting to MySQL database
-    }
-	
-    public function loadModel($name, $path='../Models/') {
-        $path=$path.$name.'.php';
-        $name=$name.'Model';
-        try {
-            if(is_file($path)) {
-                require $path;
-                $ob=new $name();
-            } else {
-                throw new Exception('Can not open model '.$name.' in: '.$path);
-            }
-        }
-        catch(Exception $e) {
-            echo $e->getMessage().'<br />
-                File: '.$e->getFile().'<br />
-                Code line: '.$e->getLine().'<br />
-                Trace: '.$e->getTraceAsString();
-            exit;
-        }
-        return $ob;
-    }
-
-    public function select($from, $select='*', $where=NULL, $order=NULL, $limit=NULL)
-	{
-        $query= (new Select($select))->From($from)->Where($where)->OrderBy($order)->Limit($limit);
- 
-        $select=$this->pdo->sendQuery($query);
-		
-        foreach ($select as $row) 
-		{
-            $data[]=$row;
-        }
- 
-        return $data;
+		$dbConfig['name']);//Connect with database
     }
 }
