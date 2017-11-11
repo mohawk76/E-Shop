@@ -17,7 +17,7 @@ class Home extends \AnvilPHP\Model
 		return $result;
 	}
 	
-	public function loadProducts()
+	public function loadProducts($limit = 12, $dbOffset = 0)
 	{
 		$get = \AnvilPHP\Get::getInstance();
 		
@@ -25,7 +25,7 @@ class Home extends \AnvilPHP\Model
 		$productCategory = $get->filteredInput('category');
 
 	   //Create SearchEngine object and Generating search method's arguments
-		$search = new \AnvilPHP\SearchEngine($this->database, "produkty");
+		$search = new \AnvilPHP\SearchEngine($this->database, "produkty", $limit);
 		$searchArray= array();
 	
 	   if(!empty($productName))
@@ -41,7 +41,7 @@ class Home extends \AnvilPHP\Model
 		$select = array("Nazwa", "Opis", "Cena", "id_producent", "ID_Image");
 
 		//Search and get result
-		$result = $search->search($select, $searchArray);
+		$result = $search->search($select, $searchArray, array(), $dbOffset);
 		$products = new \Shop\Product\productsCollection();
 
 		//Parsing search result to product and add to productsCollection
@@ -65,4 +65,28 @@ class Home extends \AnvilPHP\Model
 			return 'Nie znaleziono przedmiotu<br>';
 		}	
 	}
+	
+	public function getTotalNumberProducts()
+	{
+		$get = \AnvilPHP\Get::getInstance();
+		
+		$productName = $get->filteredInput('searched');
+		$productCategory = $get->filteredInput('category');
+		
+		$searchArray= array();
+		
+		if(!empty($productName))
+		{
+		   $searchArray[] = ("Nazwa LIKE ".'"%'.$productName.'%"');
+		}
+		if(!empty($productCategory))
+		{
+			$searchArray[] =("id_kategorii = ".$productCategory);
+		}
+		
+		$result = $this->database->sendQuery((new \AnvilPHP\Database\Select("COUNT(*) as ilosc"))->From("produkty")->Where($searchArray));
+		
+		return $result[0]['ilosc'];
+	}
+	
 }

@@ -8,16 +8,28 @@ $collection->addItem(new AnvilPHP\Route(
         'file' => DIR_CONTROLLER.'Home.php',
         'method' => 'index',
         'class' => '\Shop\Controllers\Home'
-    )
+    ),
+    array(
+        'page' => '\d+'
+    ),
+    array(
+        'page' => 1
+	)
 ), 'index');
 
 $collection->addItem(new AnvilPHP\Route(
-    HTTP_SERVER.'loadProducts',
+    HTTP_SERVER.'<page>?',
     array(
         'file' => DIR_CONTROLLER.'Home.php',
-        'method' => 'Products',
+        'method' => 'index',
         'class' => '\Shop\Controllers\Home'
-    )
-), 'loadProducts');
+    ),
+    array(
+        'page' => '\d+'
+    ),
+    array(
+        'page' => 1
+	)
+), 'indexPage');
  
 $router = new AnvilPHP\Router($_SERVER['REQUEST_URI'], $collection);

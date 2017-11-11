@@ -5,7 +5,7 @@
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteRule ^(.*)\.(gif|jpg|png|jpeg|svg|swf)$ /images/$1.$2 [L,NC]
 
-    RewriteCond %{REQUEST_FILENAME} !-f
+	RewriteCond %{REQUEST_FILENAME} !-f
 	RewriteCond %{REQUEST_FILENAME} !-d
 	RewriteRule ^(.*)$ index.php [NC,L]
 

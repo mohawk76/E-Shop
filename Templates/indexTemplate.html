@@ -16,7 +16,7 @@
         </div>
 
         <div class="searchForm">
-            <form id="searchProducts" action="loadProducts" method="get">
+            <form id="searchProducts" action="1" method="get">
                 <input type="search" placeholder="czego szukasz?" value="[@searchLast]" name="searched" class="search" />
                 <select name="category" class="category">
                     <option value="">Wszystkie działy</option>
@@ -32,12 +32,10 @@
     <div class="products">
         <div class="toogle-menu" onclick="openNav()"></div>
         <div class="content">
+			[@products]
         </div>
         <div class="navigation">
-            <a href="#top">1</a>
-            <a href="#top">2</a>
-            <a href="#top">3</a>
-            <a href="#top">4</a>
+            [@pagination]
         </div>
     </div>
 </div>
@@ -59,32 +57,6 @@
         $(".menu").css("width", 0+"px");
         $(".toogle-menu").show();
     }
-	
-	$(document).ready(function() {
-		
-		$('#searchProducts').submit( function() {
-			$.ajax({
-				url:  $(this).attr('action'),
-				type: $(this).attr('method'),
-				data: $(this).serialize(),
-				success : function(result) 
-				{
-				   $(".content").html(result);
-				}
-			});
-
-			return false;
-		});
-		
-		$.ajax({
-            url:"loadProducts",
-            success:function(result)
-			{
-				$(".content").html(result);
-            }
-        });             
-    });
-	
 </script>
 </body>
 </html>

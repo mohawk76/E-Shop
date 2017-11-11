@@ -36,7 +36,7 @@ class Get{
 	 */
     public function __get($name) 
     {
-        $result = filter_input(INPUT_GET, $name);
+        $result = $_GET[$name];
         return $result;
     }
     

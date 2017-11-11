@@ -64,7 +64,7 @@ class SearchEngine{
 	 */
     public function search($select_args=array(), $where_args=array(), $order_args=array(), $dbOffset = 0)
     {
-        $query = (new \AnvilPHP\Database\Select($select_args))->From($this->tableName)->Where($where_args)->OrderBy($order_args)->Limit($this->limit, $dbOffset*$this->limit);//Generate query
+        $query = (new \AnvilPHP\Database\Select($select_args))->From($this->tableName)->Where($where_args)->OrderBy($order_args)->Limit($this->limit, $dbOffset);//Generate query
 		
         //echo "$query<br>";
         $result = $this->database->sendQuery($query);//Send query and return array
