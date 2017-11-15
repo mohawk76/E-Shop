@@ -19,7 +19,7 @@
 .productImage{
     height: 200px;
     width: 210px;
-    float: left
+    float: left;
 }
 
 .productImage img{
@@ -59,11 +59,25 @@
     font-size: 16px;
     background-color: #3cb8f2;
     color: white;
+	text-decoration: none;
 }
 
 .addProduct:hover{
     cursor: pointer;
     background-color: #00a8f7;
+}
+
+.addproduct:visited
+{
+	background-color: inherit;
+	color: inherit;
+}
+
+.discount{
+	position: absolute;
+	bottom: 20px;
+	right: 0;
+
 }
 
 .productPrice{

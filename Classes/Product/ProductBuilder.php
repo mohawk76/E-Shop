@@ -41,7 +41,7 @@ class ProductBuilder {
 		
 		$company = $this->connect->sendQuery((new \AnvilPHP\Database\Select('nazwa'))->From('producenci')->Where('id_producent = '.$row["id_producent"]))[0]['nazwa'];
 		
-		if(\Shop\Product\product::tryParse(array($row["Nazwa"], $row["Opis"], $company, $row["Cena"], $imagePath), $item))
+		if(\Shop\Product\product::tryParse(array($row["id_produkt"], $row["Nazwa"], $row["Opis"], $company, $row["Cena"], $imagePath), $item))
 		{
 			return $item;
 		}

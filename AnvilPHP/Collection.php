@@ -150,6 +150,15 @@ class Collection
     }
 	
 	/**
+	 * Delete all items in array
+	 */
+	public function clear()
+	{
+		unset($this->items);
+		$this->items = array();
+	}
+
+	/**
 	 * Converts collection to array
 	 * @return array
 	 */
@@ -158,7 +167,29 @@ class Collection
 		return $this->items;
 	}
 	
-	public function __get($key) 
+	/**
+	 * @param mixed $key
+	 * @return mixed
+	 * @throws \Exception
+	 */
+	public function get($key) 
+	{
+		if (isset($this->items[$key])) 
+        {
+            return  $this->items[$key];
+        }
+        else 
+        {
+            throw new \Exception("Indeks $key nie istnieje.");
+        }
+	}
+	
+	/**
+	 * @param mixed $key
+	 * @return ref mixed
+	 * @throws \Exception
+	 */
+	public function &getRef($key) 
 	{
 		if (isset($this->items[$key])) 
         {
@@ -166,19 +197,45 @@ class Collection
         }
         else 
         {
-            throw new Exception("Indeks $key nie istnieje.");
+            throw new \Exception("Indeks $key nie istnieje.");
         }
 	}
 	
-	public function __set($key, $obj) 
+	/**
+	 * @param mixed $key
+	 * @param mixed $obj
+	 * @throws \Exception
+	 */
+	public function set($key, $obj) 
 	{
         if (isset($this->items[$key])) 
         {
-            throw new Exception("Index $key jest w użyciu.");
+            throw new \Exception("Index $key jest w użyciu.");
         }
         else 
         {
             $this->items[$key] = $obj;
         }
+	}
+	
+	/**
+	 * Finds index with matching value
+	 * @param mixed $value
+	 * @return mixed Return index of matching element or false
+	 */
+	public function findValue($value)
+	{
+		return array_search($value, $this->items);
+	}
+	
+	/**
+	 * Finds index with matching value in 2 dimensional array
+	 * @param mixed $value
+	 * @param mixed $key
+	 * @return mixed
+	 */
+	function findValueDim($value, $key)
+	{
+		return (array_search($value, array_column($this->items, $key)));
 	}
 }

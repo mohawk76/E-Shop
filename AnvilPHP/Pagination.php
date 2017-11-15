@@ -31,11 +31,11 @@ final class Pagination implements \AnvilPHP\HTMLGenerators\printerHTML
     /**
      * @var string Text link to first page
      */
-    private $textFirstPage = 'pierwsza';
+    private $textFirstPage = '&lt;&lt; ';
     /**
      * @var string text link to last page
      */
-    private $textLastPage = 'ostania';
+    private $textLastPage = '&gt;&gt;';
     /**
      * @var string Text link to next page
      */
@@ -419,10 +419,9 @@ final class Pagination implements \AnvilPHP\HTMLGenerators\printerHTML
  
         $numPages = ceil($this->totalItems / $this->itemsPerPage);
  
-		if($this->page > $numPages)
+		if($this->page != 1 && $this->page > $numPages || $numPages==0)
 		{
-			header("Location: ".HTTP_SERVER);
-			die();
+			return "";
 		}
 		
         $output = '';
@@ -432,12 +431,12 @@ final class Pagination implements \AnvilPHP\HTMLGenerators\printerHTML
             if ($this->textFirstPage) 
 			{
                 $firstUrl = str_replace('{page}', 1, $this->url);
-                $output .= '<a title="' . $this->titleFirstPage . '" href="' . $firstUrl . '">' . $this->textFirstPage . '</a>';
+                $output .= '<a class="pagination-link" title="' . $this->titleFirstPage . '" href="' . $firstUrl . '">' . $this->textFirstPage . '</a>';
             }
             if ($this->textPrevPage) 
 			{
                 $prevUrl = str_replace('{page}', $this->page - 1, $this->url);
-                $output .= '<a title="' . $this->titlePrevPage . '" href="' . $prevUrl . '">' . $this->textPrevPage . '</a> ';
+                $output .= '<a class="pagination-link" title="' . $this->titlePrevPage . '" href="' . $prevUrl . '">' . $this->textPrevPage . '</a> ';
             }
         }
  
@@ -478,11 +477,7 @@ final class Pagination implements \AnvilPHP\HTMLGenerators\printerHTML
                 } 
 				else 
 				{
-                    $output .= ' <a title="' . str_replace('{page}', $i, $this->titleXPage) . '" href="' . str_replace('{page}', $i, $this->url) . '">' . $i . '</a> ';
-                }
-                if ($i == 1) 
-				{
-                    $output = str_replace(array('_strona-1'), array(''), $output);
+                    $output .= ' <a class="pagination-link" title="' . str_replace('{page}', $i, $this->titleXPage) . '" href="' . str_replace('{page}', $i, $this->url) . '">' . $i . '</a> ';
                 }
             }
  
@@ -490,7 +485,7 @@ final class Pagination implements \AnvilPHP\HTMLGenerators\printerHTML
 			{
                 if (strpos($this->separatorRight, '{all_pages}') !== false)
 				{
-                    $output .= str_replace('{all_pages}', '<a title="' . str_replace('{page}', $numPages, $this->titleXPage) . '" href="' . str_replace('{page}', $numPages, $this->url) . '">' . $numPages . '</a>', $this->separatorRight);
+                    $output .= str_replace('{all_pages}', '<a class="pagination-link" title="' . str_replace('{page}', $numPages, $this->titleXPage) . '" href="' . str_replace('{page}', $numPages, $this->url) . '">' . $numPages . '</a>', $this->separatorRight);
                 }
 				else
 				{
@@ -503,11 +498,11 @@ final class Pagination implements \AnvilPHP\HTMLGenerators\printerHTML
 		{
             if ($this->textNextPage) 
 			{
-				$output .= '<a title="' . $this->titleNextPage . '" href="' . str_replace('{page}', $this->page + 1, $this->url) . '">' . $this->textNextPage . '</a> ';
+				$output .= '<a class="pagination-link" title="' . $this->titleNextPage . '" href="' . str_replace('{page}', $this->page + 1, $this->url) . '">' . $this->textNextPage . '</a> ';
 			}
 			if ($this->textLastPage) 
 			{
-				$output .= '<a title="' . $this->titleLastPage . '" href="' . str_replace('{page}', $numPages, $this->url) . '">' . $this->textLastPage . '</a> ';
+				$output .= '<a class="pagination-link" title="' . $this->titleLastPage . '" href="' . str_replace('{page}', $numPages, $this->url) . '">' . $this->textLastPage . '</a> ';
 			}
 		}
  

@@ -29,15 +29,32 @@ class Get{
         return self::$instance;
     }
 	
-	/**
-	 * Reurns value from _GET[$name]
-	 * @param string $name
+	public function exist($name)
+	{
+		return isset($_GET[$name]);
+	}
+
+		/**
+	 * Reurns value from _GET[$name] or $_GET
+	 * @param string $name(optional)
 	 * @return mixed
 	 */
-    public function __get($name) 
+    public function get($name=NULL) 
     {
-        $result = $_GET[$name];
-        return $result;
+		if($name==NULL)
+		{
+			return $_GET;
+		}
+		
+		if(isset($_GET[$name]))
+		{
+			return $_GET[$name];
+		}
+		else
+		{
+			return NULL;
+		}
+        
     }
     
 	/**
@@ -45,7 +62,7 @@ class Get{
 	 * @param string $name
 	 * @param mixed $value
 	 */
-    public function __set($name, $value) 
+    public function set($name, $value) 
 	{
 		$_GET[$name] = $value;
 	}

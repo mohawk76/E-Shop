@@ -7,21 +7,11 @@ class Home extends \AnvilPHP\Controller
 	public function index()
     {
 		$get = \AnvilPHP\Get::getInstance();
-		if($get->page)
-		{
-            $page=$get->page;
-        } 
-		else 
-		{
-            $page=1;
-        }
+		$session = \AnvilPHP\Session::getInstance();
+		
         $model = new \Shop\Models\Home();
 		
         $categories = $model->getCategories();
-		$pagination = new \AnvilPHP\Pagination($this->generateUrl('indexPage', array('page' => '{page}')));
-		$pagination->setTotalItems($model->getTotalNumberProducts());
-		$pagination->setPage($page);
-		$pagination->setItemsPerPage(4);
 		
         $view = new \Shop\Views\Home();
 		
@@ -30,10 +20,10 @@ class Home extends \AnvilPHP\Controller
 		
 		$view->categories = $categories;
 		$view->searchLast = \AnvilPHP\Get::getInstance()->filteredInput('searched');
-		$view->products = $model->loadProducts($pagination->getItemsPerPage(), (($page-1)*$pagination->getItemsPerPage()));
-		$view->pagination = $pagination;
+		$view->loadProductsURL = $this->generateUrl('loadProducts');
 		
+		$view->shoppingCart = $this->generateUrl('showCart');
+				
         $view->renderTemplateHTML();
     }
-
 }

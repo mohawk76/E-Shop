@@ -6,43 +6,57 @@
 	 * @final
 	 */
     final class product{
-		
 		/**
-		 *
+		 * @var int
+		 */
+		public $id;
+
+		/**
 		 * @var String
 		 */
         public $name;
 		
 		/**
-		 * 
 		 * @var String
 		 */
         public $description;
 		
 		/**
-		 *
 		 * @var string
 		 */
         public $company;
 		
 		/**
-		 *
 		 * @var float
 		 */
         public $price;
 		
 		/**
-		 *
 		 * @var string Stores path to image
 		 */
         public $imagePath;
 		
 		/**
+		 * @var string Stores path to detailed description
+		 */
+		public $descriptionPath;
+
+		/**
 		 * $var float Holds the percentage discount
 		 */
 		public $discount;
+		
+		/**
+		 * @var float Holds previous price before discount
+		 */
+		public $oldPrice;
 				
-        /**
+		/**
+		 * @var String holds url to action for product
+		 */
+		public $url='';
+		
+		/**
 		 * Create product
 		 * @param string $name
 		 * @param string $description
@@ -50,13 +64,16 @@
 		 * @param float $price
 		 * @param string $imagePath
 		 */
-         public function __construct(string $name, string $description, string $company, float $price, string $imagePath, float $discount = 0) {
-            $this->name = $name;
+         public function __construct(int $id, string $name, string $description, string $company, float $price, string $imagePath, float $discount = 0) {
+			$this->id = $id;
+			$this->name = $name;
             $this->description = $description;
             $this->company = $company;
-            $this->price = $price;
+			$this->oldPrice = $price;
+            $this->price = ($price-($price*$discount));
             $this->imagePath = $imagePath;
 			$this->discount = $discount;
+			
         }
 		
         /**
@@ -81,10 +98,10 @@
 		 */
         public static function tryParse($array, &$result)
         {
-            if(count($array)!=5)
+            if(count($array)!=6)
                 return false;
            
-            $result = new product($array[0], $array[1], $array[2], $array[3], $array[4]); 
+            $result = new product($array[0], $array[1], $array[2], $array[3], $array[4], $array[5]); 
             
             return true;
         }

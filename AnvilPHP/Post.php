@@ -28,16 +28,33 @@ class Post{
         }
         return self::$instance;
     }
+	
+	public function exist()
+	{
+		return isset($_GET[$name]);
+	}
 
 	/**
 	 * Reurns value from _POST[$name]
 	 * @param string $name
 	 * @return mixed
 	 */
-    public function __get($name) 
+    public function get($name=NULL) 
     {
-        $result = filter_input(INPUT_POST, $name);
-        return $result;
+		if($name==NULL)
+		{
+			return $_POST;
+		}
+		
+		if(isset($_POST[$name]))
+		{
+			return $_POST[$name];
+		}
+		else
+		{
+			return NULL;
+		}
+        
     }  
 	
 	/**
@@ -45,7 +62,7 @@ class Post{
 	 * @param string $name
 	 * @param mixed $value
 	 */
-	public function __set($name, $value) 
+	public function set($name, $value) 
 	{
 		$_POST[$name] = $value;
 	}
@@ -61,7 +78,7 @@ class Post{
 		$result = filter_input(INPUT_POST, $name);
 		if(preg_match('/[^\p{L}\d @]/u', $result))
 		{
-			header("Location: index.php");
+			header("Location: ".HTTP_SERVER);
 			die();
 		}
         return trim($result);

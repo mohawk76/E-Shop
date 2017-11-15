@@ -4,41 +4,47 @@
     <title>E-Shop Design</title>
 	<meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="Templates/indexTemplate.css" />
-	<link rel="stylesheet" type="text/css" href="Templates/productTemplate.css">
+    <link rel="stylesheet" type="text/css" href="CSS/indexTemplate.css" />
+	<link rel="stylesheet" type="text/css" href="CSS/productTemplate.css">
+	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <script type="text/javascript" src="JS/jquery-3.2.1.min.js"></script>
 </head>
 <body>
 	<div class="container">
-    <div class="header">
-        <div class="logo">
-            <a href="http://localhost/Sklep/E-Shop/"><img src="images/logo.png" alt="Logo" /></a>
-        </div>
+		<div class="header">
+			<div class="logo">
+				<a href="http://localhost/Sklep/E-Shop/"><img src="images/logo.png" alt="Logo" /></a>
+			</div>
 
-        <div class="searchForm">
-            <form id="searchProducts" action="1" method="get">
-                <input type="search" placeholder="czego szukasz?" value="[@searchLast]" name="searched" class="search" />
-                <select name="category" class="category">
-                    <option value="">Wszystkie działy</option>
-                    [@categories]
-                </select>
-                <input type="submit" class="submit" value="Szukaj!" name="submit" />
-            </form>
-        </div>
-        <a href="SearchModule2.php"><div class="shopCart"></div></a>
-        <div class="clearHeader"></div>
-    </div>
+			<div class="searchForm">
+				<form id="searchProducts" action="loadProducts/1" method="get">
+					<input type="search" placeholder="czego szukasz?" value="[@searchLast]" name="searched" class="search" />
+					<select name="category" class="category">
+						<option value="">Wszystkie działy</option>
+						[@categories]
+					</select>
+					<input type="submit" class="submit" value="Szukaj!" name="submit" />
+				</form>
+			</div>
+			<a href="[@shoppingCart]"><div class="shopCart"></div></a>
+			<div class="clearHeader"></div>
+		</div>
 
-    <div class="products">
-        <div class="toogle-menu" onclick="openNav()"></div>
-        <div class="content">
-			[@products]
-        </div>
-        <div class="navigation">
-            [@pagination]
-        </div>
-    </div>
-</div>
+		<div id="overlay-loading">
+			<div id="loadingIcon">
+				<i class="fa fa-refresh fa-spin fa-3x fa-fw margin-bottom"></i>
+			</div>
+		</div>
+		<div class="toogle-menu" onclick="openNav()"></div>
+		<div class="products">
+			<div class="content">
+				
+			</div>
+			<div class="navigation">
+				
+			</div>
+		</div>
+	</div>
 
 <div class="menu" id="menu">
     <div class="closebtn" onclick="closeNav()"></div>
@@ -48,6 +54,83 @@
 </div>
 	
 <script>
+	var page = 1;
+	if(getQueryVariable('page'))
+	{
+		page = getQueryVariable('page');
+	}
+		
+	$(document).ready(function(){
+		
+		$("#searchProducts").submit(function(event){
+			event.preventDefault(); 
+			$(".submit").attr("disabled", true);
+			$.ajax({
+				url: $(this).attr('action'),
+				data: {
+					searched: $('.search').val(),
+					category: $('.category').val()
+				},
+				success: function(result)
+				{
+					$("#overlay-loading").show();
+					loadContent(result);
+				}
+			});
+		});
+		
+		$.ajax({
+			url: "[@loadProductsURL]/"+page,
+			data:{
+					searched: $('.search').val(),
+					category: $('.category').val()
+			},
+			success: function(result)
+			{
+				loadContent(result);
+			}
+		});
+	});
+	
+	function loadContent(result)
+	{
+		window.history.pushState("", "", result.url);
+		
+		$('.content').html(result.products);
+		$('.navigation').html(result.pagination);
+		
+		$("#overlay-loading").fadeIn('normal', function(){
+			$(this).fadeOut();
+		});		
+		
+		setTimeout(function(){
+			$("#overlay-loading").hide();
+			$(".submit").attr("disabled", false);
+		}, 500);
+		
+		$(".addProduct").click(function(event){
+			event.preventDefault(); 
+			$.ajax({
+				url: $(this).attr('href'),
+				success: function(response) {
+					alert(response);
+				}
+			});
+		});
+		
+		$(".pagination-link").click(function(event){
+			event.preventDefault(); 
+			$.ajax({
+				url: $(this).attr('href'),	
+				success: function(result)
+				{
+					$("#overlay-loading").show();
+					loadContent(result);
+				}
+			});
+		});
+	}
+	
     function openNav() {
         $(".menu").css("width", 250+"px");
         $(".toogle-menu").hide();
@@ -57,6 +140,19 @@
         $(".menu").css("width", 0+"px");
         $(".toogle-menu").show();
     }
+	
+	function getQueryVariable(variable){
+		var query = window.location.search.substring(1);
+		var vars = query.split("&");
+		for (var i=0;i<vars.length;i++) 
+		{
+			var pair = vars[i].split("=");
+			if(pair[0] == variable) 
+			{
+				return pair[1];
+			}
+		}
+	}
 </script>
 </body>
 </html>

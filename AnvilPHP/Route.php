@@ -153,7 +153,7 @@ class Route
 	 */
     public function setPath($path)
     {
-        $this->path = HTTP_SERVER . $path;
+        $this->path = $path;
     }
 
 	/**
@@ -162,7 +162,7 @@ class Route
 	 */
     public function getPath()
     {
-        return $this->path;
+        return HTTP_SERVER .$this->path;
     }
 	
 	/**

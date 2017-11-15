@@ -2,4 +2,4 @@
 
 namespace Shop\Product;
 
-class ErrorBuilderException extends Exception {}
+class ErrorBuilderException extends \Exception {}

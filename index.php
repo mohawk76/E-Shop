@@ -3,6 +3,13 @@ require_once('Config/config.php');
 require_once(DIR_VENDOR.'autoload.php');
 require_once('Config/configRouter.php');
 
+$session = \AnvilPHP\Session::getInstance();
+
+if(!isset($session->ShoppingCart))
+{
+	$session->ShoppingCart = new \AnvilPHP\Collection();
+}
+
 $router = new AnvilPHP\Router('http://'.$_SERVER["SERVER_NAME"].$_SERVER["REQUEST_URI"]);
 $router->run();
 
@@ -18,8 +25,6 @@ if(empty($file))
 	print('<center><h1>404 Not Found</h1></center>');
 	die();
 }
-
-require_once($file);
 
 $obj = new $classController();
 $obj->$method();

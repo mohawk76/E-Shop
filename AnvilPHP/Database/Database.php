@@ -56,9 +56,13 @@ use \PDO;
 					unset($stmt);
 					return $result;
 				}
-				catch (Exception $ex)
+				catch (PDOException $e) 
 				{
-					throw $ex;
+					echo "DataBase Error: ".$e->getMessage();
+				}
+				catch (Exception $e) 
+				{
+					echo "General Error: ".$e->getMessage();
 				}
 			}
 			else 

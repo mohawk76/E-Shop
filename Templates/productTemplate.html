@@ -4,7 +4,7 @@
             <div>
                 <a href="#"><span class="productTitle">[@name]</span></a>
                 <span style="float: right;">
-                    <button id="addProductToCart" class="addProduct">Dodaj do koszyka!</button>
+                    <a href="[@url]" id="addProductToCart" class="addProduct">Dodaj do koszyka!</a>
                 </span>
                 <span style="clear: both"></span>
             </div>
@@ -14,7 +14,8 @@
             <span>
                 [@description]
             </span>
-            <div class="productPrice">Cena: [@price] zł</div>
+			<div class="discount">[@discount]</div>
+            <div class="productPrice">Cena: [@oldPrice] [@price] zł</div>
         </div>
         <div style="clear: both"></div>
     </div>

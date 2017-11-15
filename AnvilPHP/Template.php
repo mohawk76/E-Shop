@@ -45,7 +45,7 @@ class Template implements \AnvilPHP\HTMLGenerators\printerHTML{
 	 * @throws FileExistEception
 	 * @return string
 	 */
-	private function getResult()
+	protected function getResult()
 	{
 		if(!file_exists($this->file))//Checks whether the file exists
 		{

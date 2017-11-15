@@ -38,16 +38,7 @@ abstract class Controller{
 			die();
 		}
 		
-		$get = explode('?', $_SERVER['REQUEST_URI']);
-		
-		if(isset($get[1]))
-		{
-			 return $route->generateUrl($data).'?'.$get[1]; 
-		}
-		else 
-		{
-			return $route->generateUrl($data);
-		}
+		return $route->generateUrl($data);
 	}
 	
 }
