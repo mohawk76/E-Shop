@@ -1,0 +1,212 @@
+body
+{
+    box-sizing: border-box;
+    background-color: #f7f7f7;
+    margin: 0;
+    width: 100%;
+    height: 100%;
+}
+
+/*GORNY BLOCZEK*/
+
+.gornyBlok
+{
+    background-color: #0e3758;
+    height: 50px;
+}
+
+.login
+{
+    border: none;
+    display: inline-block;
+    height: 50px;
+    /*width: 120px;*/
+    float: right;
+    /*margin-right: 50px;*/
+    background-color:  #0e3758;
+    color: #f0f3e2;
+    font-weight: bold;
+    font-size: 16px;
+    outline: none;
+    font-family: raleway;
+}
+
+.login:hover
+{
+    cursor: pointer;
+    background-color: #0a2942;
+}
+
+.register
+{
+    border: none;
+    display: inline-block;
+    height: 50px;
+    /*width: 120px;*/
+    float: right;
+    margin-right: 0px;
+    background-color:  #0e3758;
+    color: #f0f3e2;
+    font-weight: bold;
+    font-size: 16px;
+    outline: none;
+    font-family: raleway;
+}
+
+.register:hover
+{
+    cursor: pointer;
+    background-color: #0a2942;
+}
+
+.menu:hover
+{
+    cursor: pointer;
+}
+
+/*KONIEC BLOCZKA*/
+
+
+/* CALY SEARCHBAR + SELECT*/
+
+.searchBar
+{
+    position: relative;
+    background-color: white;
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    display: inline-block;
+    z-index: 0 !important;
+}
+
+.searchIcon
+{
+    box-sizing: border-box;
+    border: none;
+    outline: none;
+    background-color: white;
+    padding-right: 35px;
+    padding-top: 5px;
+    color: 	#d1d1d1;
+    float: right;
+    width: 24px;
+    height: 36px;
+    font-size: 24px;
+}
+
+.selectArrow i
+{
+    transition: .1s;
+}
+
+div.selectBox
+{
+    position:relative;
+    display:inline-block;
+    cursor:default;
+    text-align:left;
+    line-height:30px;
+    clear:both;
+    color:#d1d1d1;
+    font-weight: bold;
+}
+
+div.selectBox:hover
+{
+    cursor: pointer;
+}
+
+span.selected
+{
+    width:167px;
+    text-indent:20px;
+    border:none;
+    background:white;
+    overflow:hidden;
+}
+
+span.selectArrow
+{
+    width:30px;
+    border:none;
+    text-align:center;
+    font-size:20px;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+    background:white;
+}
+
+span.selectArrow,span.selected
+{
+    position:relative;
+    float:left;
+    height:32px;
+    z-index:1;
+    padding-top: 3px;
+}
+
+div.selectOptions
+{
+    position:absolute;
+    top:35px; /* wysokosc opcji */
+    left:0;
+    width:198px;
+    border: 2px solid #ccc;
+    border-top: none;
+    overflow:hidden;
+    background:white;
+    padding-top:2px;
+    display:none;
+}
+
+span.selectOption
+{
+    display:block;
+    width:80%;
+    line-height:20px;
+    padding:5px 10%;
+}
+
+span.selectOption:hover
+{
+    color:#0032b7;
+    background:#c9c9c9;	
+}
+
+.searchIcon:hover
+{
+    background-color: #f2f2f2;
+    cursor: pointer;
+}
+
+.search
+{
+    border:none;
+    padding-top: 10px;
+    padding-left: 10px;
+    font-weight: bold;
+    float: left;
+    font-size: 16px;
+    outline: none;
+    
+}
+
+input::placeholder
+{
+    color:#d1d1d1;
+}
+
+/*KONIEC SEARCHBAR'A I SELECTA*/
+
+/*CONTENT*/
+
+.glownyStyl
+{
+    position: relative;
+}
+
+/* KONIEC CONTENTU*/

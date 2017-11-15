@@ -1,0 +1,119 @@
+@media screen and (max-width: 960px) 
+{
+    .navMenu
+    {
+        background-color: #ffffff;
+        width: 0px;
+        height: 100%;
+        position: fixed;
+        transition: 0.5s;
+        overflow: hidden;
+        z-index:3;
+    }
+    .menu
+    {
+        background-color: #0e3758;
+        border: none;
+        display: inline-block;
+        padding-left: 5px;
+        padding-top: 15px;
+        font-size: 18px;
+        transition: 0.5s;
+        outline:none;
+        font-family: raleway;
+        color: #f0f3e2;
+    } 
+    .napisMenu
+    {
+        font-weight: bold;
+        font-size: 24px;
+        padding-left: 15px;
+        padding-right: 5px;
+        width: 100px;
+
+    }
+
+    .listMenu a
+    {
+        font-size: 16px;
+        display: block;
+        padding-top: 10px;
+        padding-left: 15px;
+        padding-right: 5px;
+        padding-bottom: 10px;
+        color: black;
+        text-decoration: none;
+    
+    }
+
+    .listMenu a:hover
+    {
+        color: #0032b7;
+        background-color: #ffffff;
+    }
+    
+    #podMenu
+    {
+        height: 0px;
+        overflow: hidden;
+        transition: 0.5s;
+        padding-left: 25px;
+    }
+}
+
+@media screen and (min-width: 960px) 
+{
+    body{
+        background-color: #f7f7f7 !important;
+    }
+    .navMenu
+    {
+        background-color: #ffffff;
+        height: 100%;
+        position: fixed;
+        width: 300px !important;
+        z-index:3;
+        transition: 0.5s;
+    }
+    
+    .napisMenu
+    {
+        font-weight: bold;
+        font-size: 24px;
+        padding-left: 15px;
+        padding-right: 5px;
+
+    }
+
+    .listMenu a
+    {
+        font-size: 16px;
+        display: block;
+        padding-top: 10px;
+        padding-left: 15px;
+        padding-right: 5px;
+        padding-bottom: 10px;
+        color: black;
+        text-decoration: none;
+    
+    }
+
+    .listMenu a:hover
+    {
+        color: #0032b7;
+        background-color: #ffffff;
+    }
+    .menu
+    {
+        display: none;
+    }
+    
+    #podMenu
+    {
+        height: 0px;
+        overflow: hidden;
+        transition: 0.5s;
+        padding-left: 25px;
+    }
+    
+}

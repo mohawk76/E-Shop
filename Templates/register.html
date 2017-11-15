@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Banana-Shop.pl</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <link rel="stylesheet" media="(max-width: 500px)" href="small-screen-500.css">
+    <link rel="stylesheet" media="(max-width: 609px)" href="medium-screen-609.css">
+    <link rel="stylesheet" media="(max-width: 700px)" href="medium-screen-700.css">
+    <link rel="stylesheet" media="(max-width: 959px)" href="large-screen-959.css">
+    <link rel="stylesheet" media="(min-width: 960px)" href="large-screen-1920.css">
+    
+    <link rel="stylesheet" href="styles/main-css.css">
+    <link rel="stylesheet" href="styles/register-style.css">
+    
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+
+    <script type="text/jscript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</head>
+<style>
+html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
+</style>
+<body>
+<!-- Top container -->
+<div class="gornyBlok" style="z-index:4">
+    <button class="profil">  Twój Profil</button>
+    <button class="register">  Rejestracja</button>
+</div>
+
+<!-- !PAGE CONTENT! -->
+
+    <div class="glownyStyl" >
+        <div class="background-form">
+            <h3>Załóż konto</h3>
+            <form method="get" class="form-register">
+                <div class="button">
+                    <div class="radio-button" data-value="prywatny">
+                        <div class="circle"></div>
+                        
+                    </div><span style="margin-right: 0px;">Prywatne</span>
+                    
+                    <div class="radio-button" data-value="firma">
+                        <div class="circle"></div>
+                        
+                    </div><span>Firma</span>
+                </div>
+                
+                <br>
+                
+                <div style="height: 50px; margin-bottom: 70px;"><input type="email" placeholder="E-mail" name="e-mail" class="email"></div>
+                <div style="height: 50px; margin-bottom: 40px;"><input type="password" placeholder="Hasło" name="passwd" class="passwd"></div>
+                
+                <div style="margin-bottom: 20px;">
+                    <h4 style="margin-bottom: 0px;">Data urodzenia</h4>
+                    <div style="height: 50px; margin-bottom: 10px; width:123px; float: left;"><input type="number" value="Dzień" placeholder="Dzień" name="day" class="day-year"></div>
+                    
+                    <div style="height: 40px; width: 261px; margin-bottom: 10px; float: left;">
+                    <div class="selectDiv">
+                        <span class="select"></span>
+                        <span class="select-arrow"><i class="fa fa-chevron-down" aria-hidden="true"></i></span>
+                    <div class="selectMonths" >
+                        <span class="selectMonth" value="">Wszystkie działy</span>
+                    </div>      
+                    </div></div>
+                    
+                    <div style=" height: 40px; width: 123px; margin-bottom: 10px; float: left; margin-left: 50px;"><input type="number" value="Rok" name="year" placeholder="Rok" class="day-year"></div>
+                </div>
+                
+                <div class="container">
+                    <div name="rule" class="checkbox">
+                        <div class="check"><i class="fa fa-check" aria-hidden="true"></i></div>
+                    </div>
+                        <span>Oświadczam, że znam i akceptuję postanowienia <a href="ruleBanana">Banana-Shop</a></span>
+                </div>
+                
+            </form>
+        </div>
+        
+      <!-- Footer -->
+      <!--<footer class="stopka">
+        <h4>FOOTER</h4>
+        <p>Powered by <a href="" target="_blank">Magda Miller</a></p>
+      </footer>-->
+
+      <!-- End page content -->
+    </div>
+
+    
+    <script>
+        $(document).ready(function() {
+            $(".radio-button").children().hide();
+            $(".radio-button").children(":first").show();
+            $(".radio-button:first").css("border", "2px solid #666666");
+            var val = $(".radio-button").attr('data-value');
+            //alert(val);
+        
+        
+            $(".radio-button").click(function(){
+                $(".button").find('.radio-button').children('.circle').hide();
+                $(".button").find('.radio-button').css("border", "1px solid #a6a6a6");
+                $(this).children('.circle').show();
+                $(this).css("border", "2px solid #666666");
+                var val = $(this).attr('data-value');
+                //alert(val);
+                //$(this).parent().find('input').val(val);
+            });
+            
+            $(".checkbox").click(function(){
+                if($(this).attr('checked'))
+                {
+                    $(this).attr('checked', false);
+                    $(this).children().hide();
+                    $(this).css('border', '1px solid #a6a6a6');
+                }
+                else
+                {
+                    $(this).attr('checked', true);
+                    $(this).children().show();
+                    $(this).css('border', '2px solid #666666');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

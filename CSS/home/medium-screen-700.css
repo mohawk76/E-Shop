@@ -1,0 +1,62 @@
+@media (max-width: 700px) and (min-width: 610px)
+{
+    body 
+    {
+        font-size: 1.0em;
+        background-color: #f7f7f7;
+    }
+
+    /*ustawienie search'a*/
+    .formularz
+    {
+        position: absolute;
+        margin-left: -290px;
+        top: -80px;
+        width:100px;
+    }
+    
+    .searchBar
+    {
+        width: 80vw;
+        height: 40px;
+        margin-top: 65px;
+        margin-right: 100px;
+        
+    }
+    
+    .selectBox *
+    {
+       display: none;
+    }
+    
+    .login
+    {
+        width: 100px;
+        margin-right: 10px;
+    }
+    
+    .register
+    {
+        width: 100px;
+    }
+    
+    .basket
+    {
+        position: absolute;
+        width: 50px;
+        height: 50px;
+        float: right;
+        margin-top: 0px;
+        margin-left: 65%;
+    }
+    
+    .basketIcon i
+    {
+        font-size: 36px;
+    }
+    
+    .basket-menu
+    {
+        display: none;
+    }
+}

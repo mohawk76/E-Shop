@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Banana-Shop.pl</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <link rel="stylesheet" media="(max-width: 500px)" href="home/small-screen-500.css">
+    <link rel="stylesheet" media="(max-width: 609px)" href="home/medium-screen-609.css">
+    <link rel="stylesheet" media="(max-width: 700px)" href="home/medium-screen-700.css">
+    <link rel="stylesheet" media="(max-width: 959px)" href="home/large-screen-959.css">
+    <link rel="stylesheet" media="(min-width: 960px)" href="home/large-screen-1920.css">
+    
+    <link rel="stylesheet" href="styles/main-css.css">
+    <link rel="stylesheet" href="styles/navBar.css">
+    
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+
+    <script type="text/jscript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</head>
+<style>
+html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
+</style>
+<body>
+<!-- Top container -->
+<div class="gornyBlok" style="z-index:4">
+    <button class="menu" onclick="w3_open();"><i class="fa fa-bars"></i>  Menu</button>
+    <button class="login">  Zaloguj</button>
+    <button class="register">  Rejestracja</button>
+</div>
+
+<!-- Sidebar/menu -->
+<nav class="navMenu" id="mySidebar"><br>
+    <div class="napisMenu">
+        <h5>Menu</h5>
+    </div>
+
+    <a class="basket-menu">
+        <span class="basketIcon2"><i class="fa fa-shopping-cart" aria-hidden="true"></i></span>
+    </a>
+    
+  <div class="listMenu">
+    <a href="#" class="opcja"><i class="fa fa-exclamation-circle" aria-hidden="true"></i>  Nowości</a>
+    <a href="#" class="opcja"><i class="fa fa-heart" aria-hidden="true"></i>  Top10</a>
+    <a href="#" class="opcja" id="gry"><i class="fa fa-gamepad" aria-hidden="true"></i>  Gry</a>
+    <div id="podMenu" class="gry"> 
+        <a class="opcja1">Gry PC i Mac</a>
+        <a class="opcja1">Gry PS4</a>
+        <a class="opcja1">Gry Xbox One</a>
+        <a class="opcja1">Gry Nintendo Switch</a>
+        <a class="opcja1">Gry PS3</a>
+        <a class="opcja1">Gry Xbox 360</a> 
+    </div>
+    <a href="#" class="opcja" id="gadget"><i class="fa fa-headphones" aria-hidden="true"></i>  Gadżety</a>
+      <div id="podMenu" class="gadget"> 
+        <a class="opcja1">Zabawki</a>
+        <a class="opcja1">Odzież</a>
+        <a class="opcja1">Figurki</a>
+        <a class="opcja1">Akcesoria</a>
+        <a class="opcja1">Lego</a>
+        <a class="opcja1">Minecraft</a> 
+    </div>
+    <a href="#" class="opcja" id="boardgames"><i class="fa fa-map-o" aria-hidden="true"></i>  Planszówki</a>
+      <div id="podMenu" class="boardgames"> 
+        <a class="opcja1">Gry planszowe</a>
+        <a class="opcja1">Gry karciane</a>
+        <a class="opcja1">Gry figurkowe</a>
+    </div>
+    <a href="#" class="opcja" id="movies"><i class="fa fa-film" aria-hidden="true"></i>  Filmy</a>
+      <div id="podMenu" class="movies"> 
+        <a class="opcja1">Filmy dla dzieci</a>
+        <a class="opcja1">Filmy na DVD</a>
+        <a class="opcja1">Filmy na Blu-Ray/3D</a>
+        <a class="opcja1">Komedie</a>
+        <a class="opcja1">Anime</a>
+        <a class="opcja1">Sci-Fi i Fantasy</a> 
+    </div>
+    <a href="#" class="opcja" id="music"><i class="fa fa-music" aria-hidden="true"></i>  Muzyka</a>
+      <div id="podMenu" class="music"> 
+        <a class="opcja1">Płyty CD</a>
+        <a class="opcja1">Płyty winylowe</a>
+        <a class="opcja1">Filmy muzyczne na Blu-Ray i DVD</a>
+    </div>
+    <a href="#" class="opcja" id="books"><i class="fa fa-book" aria-hidden="true"></i>  Ksiązki</a>
+      <div id="podMenu" class="books"> 
+        <a class="opcja1">Książki</a>
+        <a class="opcja1">E-Booki</a>
+        <a class="opcja1">Audiobooki cyfrowe</a>
+        <a class="opcja1">Audiobooki na CD</a> 
+    </div>
+    <a href="#" class="opcja" id="hardware"><i class="fa fa-cogs" aria-hidden="true"></i>  Sprzęt</a>
+      <div id="podMenu" class="hardware"> 
+        <a class="opcja1">Konsole</a>
+        <a class="opcja1">Akcesoria do konsol</a>
+        <a class="opcja1">Akcesoria PC</a>
+        <a class="opcja1">Słuchawki</a>
+    </div><br><br>
+  </div>
+</nav>
+
+
+<!-- Overlay effect when opening sidebar on small screens -->
+<div class="malyEkran" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
+
+<!-- !PAGE CONTENT! -->
+
+    <div class="glownyStyl" style="margin-left:300px;margin-top:43px;">
+
+      <!-- Header -->
+       <!-- <h5><b><i class="fa fa-dashboard"></i> Produkty</b></h5> -->
+        <form method="get" class="formularz">
+            <input type="hidden" name="foo">
+            <div class="searchBar">
+                <input class="search" type="text" name="search" placeholder="Szukaj..">
+                
+                <div class="selectBox">
+                    <span class="selected"></span>
+                    <span class="selectArrow"><i class="fa fa-chevron-down" aria-hidden="true"></i></span>
+                    <div class="selectOptions" >
+                        <span class="selectOption" value="">Wszystkie działy</span>
+                    </div>
+                </div>
+
+                <button class="searchIcon" type="submit" name="submit" value="someValue"><i class="fa fa-search" aria-hidden="true"></i></button>
+                
+                       <a class="basket">
+            <span class="basketIcon"><i class="fa fa-shopping-cart" aria-hidden="true"></i></span>
+        </a>
+            </div>
+        </form>
+
+      <!-- Footer -->
+      <!--<footer class="stopka">
+        <h4>FOOTER</h4>
+        <p>Powered by <a href="" target="_blank">Magda Miller</a></p>
+      </footer>-->
+
+      <!-- End page content -->
+    </div>
+
+<script>
+// Get the Sidebar
+var mySidebar = document.getElementById("mySidebar");
+
+// Get the DIV with overlay effect
+var overlayBg = document.getElementById("myOverlay");
+
+// Toggle between showing and hiding the sidebar, and add overlay effect
+function w3_open() {
+    if ($(".navMenu").width()==0) {
+        $(".navMenu").width(300);
+        $('.grayDiv').css('background-color','rgba(0,0,0,0.4)');
+    } else {
+        $(".navMenu").width(0);
+        $('.grayDiv').css('background-color','white');
+    }
+}
+
+// Close the sidebar with the close button
+function w3_close() {
+    mySidebar.style.display = "none";
+    overlayBg.style.display = "none";
+    $(".menu").style.display = "block";
+}
+    
+$(".opcja").click(function()
+{
+    var podMenu= '.'+$(this).attr("id");
+    if($(podMenu).height()==0)
+        {
+            $(podMenu).height(200);
+        }
+    else
+    {
+        $(podMenu).height(0);
+    }
+});
+    
+//select
+$(document).ready(function() {
+    enableSelectBoxes();
+});
+			
+function enableSelectBoxes(){
+    $('div.selectBox').each(function(){
+        $(this).children('span.selected').html($(this).children('div.selectOptions').children('span.selectOption:first').html());
+        $(this).attr('value',$(this).children('div.selectOptions').children('span.selectOption:first').attr('value'));
+					
+        $(this).children('span.selected,span.selectArrow').click(function(){
+            if($(this).parent().children('div.selectOptions').css('display') == 'none'){
+                $(this).parent().children('div.selectOptions').css('display','block');
+            }
+            else
+            {
+                $(this).parent().children('div.selectOptions').css('display','none');
+            }
+            selectboxEvent();
+        });
+					
+        $(this).find('span.selectOption').click(function(){
+            $(this).parent().css('display','none');
+            $(this).closest('div.selectBox').attr('value',$(this).attr('value'));
+            $(this).parent().siblings('span.selected').html($(this).html());
+            $('input[name="foo"]').val($(this).html());
+            selectboxEvent();
+        });
+    });				
+}
+    function selectboxEvent()
+    {
+        if($('.selectArrow').children('i').attr('style')!='transform: rotate(180deg)') 
+       {
+           $('.selectArrow').children('i').attr('style','transform: rotate(180deg)');
+       }
+        else
+        {
+            $('.selectArrow').children('i').attr('style','');
+        }
+    }
+    
+    document.write("<br>"+window.innerWidth); // wyswietla szerokosc strony
+    1
+</script>
+
+</body>
+</html>
