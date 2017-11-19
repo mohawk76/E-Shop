@@ -11,16 +11,22 @@ class Home extends \AnvilPHP\Controller
 		
         $model = new \Shop\Models\Home();
 		
-        $categories = $model->getCategories();
+		$menuCategories = $model->getLinkCategories($this->generateUrl('loadProducts'));
+        $searchCategories = $model->getSpanCategories();
 		
         $view = new \Shop\Views\Home();
 		
-        $template = new \AnvilPHP\Template('Templates/indexTemplate.html');
+		$subMenuTemplate = new \AnvilPHP\Template('Templates/Categories.html');
+		$subMenuTemplate->categories = $menuCategories ;
+
+		
+        $template = new \AnvilPHP\Template('Templates/index.html');
 		$view->setTemplate($template);	
 		
-		$view->categories = $categories;
-		$view->searchLast = \AnvilPHP\Get::getInstance()->filteredInput('searched');
+		$view->categories = $searchCategories;
+		$view->searchLast = $get->filteredInput('searched');
 		$view->loadProductsURL = $this->generateUrl('loadProducts');
+		$view->submenu = $subMenuTemplate;
 		
 		$view->shoppingCart = $this->generateUrl('showCart');
 				

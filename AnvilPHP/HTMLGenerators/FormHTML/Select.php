@@ -1,6 +1,6 @@
 <?php
 
-namespace AnvilPHP\HTMLGenerators\Form;
+namespace AnvilPHP\HTMLGenerators\FormHTML;
 
 class Select extends \AnvilPHP\HTMLGenerators\elementHTML
 {
@@ -8,10 +8,10 @@ class Select extends \AnvilPHP\HTMLGenerators\elementHTML
    public $name;
    public $value;
    public $newLine;
-   public $options = array();
+   public $options;
     
     public function __construct() {
-        
+        $this->options = new \AnvilPHP\HTMLGenerators\ElementsCollection();
     }
     
     public function printHTML()

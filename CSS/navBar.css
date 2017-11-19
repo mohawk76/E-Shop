@@ -4,8 +4,8 @@
     {
         background-color: #ffffff;
         width: 0px;
-        height: 100%;
-        position: fixed;
+        min-height: 100%;
+        position: absolute;
         transition: 0.5s;
         overflow: hidden;
         z-index:3;
@@ -52,12 +52,13 @@
         background-color: #ffffff;
     }
     
-    #podMenu
+    .podMenu
     {
-        height: 0px;
+        height: 0;
         overflow: hidden;
-        transition: 0.5s;
+        transition: height 0.5s ease-in;
         padding-left: 25px;
+		box-sizing: border-box;
     }
 }
 
@@ -108,12 +109,13 @@
         display: none;
     }
     
-    #podMenu
+    .podMenu
     {
-        height: 0px;
+        height: 0;
         overflow: hidden;
-        transition: 0.5s;
+        transition: height 0.5s ease-in;
         padding-left: 25px;
+		box-sizing: border-box;
     }
     
 }

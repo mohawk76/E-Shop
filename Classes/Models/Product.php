@@ -83,4 +83,54 @@ class Product extends \AnvilPHP\Model
 		
 		return $result[0]['ilosc'];
 	}
+	
+	public function addToCart($id, $quantity)
+	{
+		$session = \AnvilPHP\Session::getInstance();
+		
+		$finded=$this->isInCart($id);
+		
+		if($finded===false)
+		{
+			$product = array(
+			'ID' => $id,
+			'Quantity' => $quantity
+			);
+			
+			$session->ShoppingCart->addItem($product);
+		}
+		else
+		{
+			$session->ShoppingCart->getRef($finded)['Quantity'] += $quantity;
+		}
+	}
+	
+	public function clearCart()
+	{
+		$session = \AnvilPHP\Session::getInstance();
+		$session->ShoppingCart->clear();
+	}
+	
+	public function isInCart($id)
+	{
+		$session = \AnvilPHP\Session::getInstance();
+		return $session->ShoppingCart->findValueDim($id,'ID');
+	}
+	
+	public function deleteFromCart($id)
+	{
+		$session = \AnvilPHP\Session::getInstance();
+		
+		$finded=$this->isInCart($id);
+		
+		if($finded===false)
+		{
+			return false;
+		}
+		else
+		{
+			$session->ShoppingCart->deleteItem($finded);
+			return TRUE;
+		}
+	}
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace AnvilPHP\HTMLGenerators\Form;
+namespace AnvilPHP\HTMLGenerators\FormHTML;
 
 class Option extends \AnvilPHP\HTMLGenerators\elementHTML
 {
@@ -12,9 +12,10 @@ class Option extends \AnvilPHP\HTMLGenerators\elementHTML
         $this->value = $value;
     }
 	
-	public function getOption($selected="")
+	public function getHTML($selected="")
 	{
-		$result = '<option value="'.$this->value.'" ';
+		$result = '<option'. parent::__
+				. ' value="'.$this->value.'" ';
 		
         if($selected== $this->value)
             $result .= 'selected="selected" ';

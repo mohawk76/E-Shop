@@ -4,7 +4,6 @@ require_once(DIR_VENDOR.'autoload.php');
 require_once('Config/configRouter.php');
 
 $session = \AnvilPHP\Session::getInstance();
-
 if(!isset($session->ShoppingCart))
 {
 	$session->ShoppingCart = new \AnvilPHP\Collection();

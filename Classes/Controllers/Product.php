@@ -7,7 +7,6 @@ class Product extends \AnvilPHP\Controller
 	public function addToCart()
 	{
 		$get = \AnvilPHP\Get::getInstance();
-		$session = \AnvilPHP\Session::getInstance();
 		
 		if($get->get('id'))
 		{
@@ -36,49 +35,34 @@ class Product extends \AnvilPHP\Controller
 			die();
 		}
 		
-		$finded = $session->ShoppingCart->findValueDim($id,'ID');
-		
-		if($finded===FALSE)
-		{
-			$product = array(
-			'ID' => $id,
-			'Quantity' => $quantity
-			);
-			
-			$session->ShoppingCart->addItem($product);
-		}
-		else
-		{
-			$session->ShoppingCart->getRef($finded)['Quantity'] += $quantity;
-		}
+		$model->addToCart($id, $quantity);
 		
 		$view->renderHTML("Dodano do koszyka!");
 	}
 	
 	public function clearCart()
 	{
-		$session = \AnvilPHP\Session::getInstance();
-		$session->ShoppingCart->clear();
+		$model = new \Shop\Models\Product();
+		$model->clearCart();
 	}
 	
 	public function deleteFromCart()
 	{
 		$get = \AnvilPHP\Get::getInstance();
-		$session = \AnvilPHP\Session::getInstance();
 		
 		$id = $get->get('productID');
 		
-		$finded = $session->ShoppingCart->findValueDim($id,'ID');
+		$model = new \Shop\Models\Product();
 		
 		$view = new \Shop\Views\Product();
 		
-		if($finded===FALSE)
+		if(!$model->deleteFromCart($id))
 		{
 			$view->renderHTML('Produktu nie ma w koszyku.');
 		}
 		else 
 		{
-			$session->ShoppingCart->deleteItem($finded);
+			
 			$view->renderHTML("Produkt został usunięty z koszyka.");
 		}
 	}
@@ -121,7 +105,14 @@ class Product extends \AnvilPHP\Controller
 			
 			if(!empty($get->get('category')))//If the parameter is specified, it adds to the generated url
 			{
-				$products['url'] .= "&".$getUrl[1];
+				if(empty($getUrl[1]))
+				{
+					$products['url'] .= "&".$getUrl[0];
+				}
+				else
+				{
+					$products['url'] .= "&".$getUrl[1];
+				}
 			}
 		}
 		else
@@ -139,16 +130,16 @@ class Product extends \AnvilPHP\Controller
 			($page-1)*$pagination->getItemsPerPage()), "Templates/productTemplate.html");//loads the HTML code of the products
 		
 		$products['pagination'] = strval($pagination);//loads the HTML code of the pagination
-		
+				
 		$view->renderJSON($products);//render json on page
 	}
 	
-	public function deleteProduct()
+	public function deleteProductToDB()
 	{
 		
 	}
 	
-	public function addProduct()
+	public function addProductToDB()
 	{
 		
 	}
