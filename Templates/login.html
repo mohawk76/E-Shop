@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Banana-Shop.pl</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <link rel="stylesheet" href="styles/main-css.css">
+    <link rel="stylesheet" href="styles/login-style.css">
+    
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+
+    <script type="text/jscript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</head>
+<style>
+html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
+</style>
+<body>
+<!-- Top container -->
+<div class="gornyBlok" style="z-index:4">
+    <button class="register">  Rejestracja</button>
+</div>
+
+<!-- !PAGE CONTENT! -->
+
+    <div class="glownyStyl" >
+        <div class="background-form">
+            <h3>Zaloguj się</h3>
+            <form method="get" class="form-login">
+
+
+                <div>
+                    <div style="height: 50px; margin-bottom: 40px;"><label for="login-input" style="margin-right: 20px;">Podaj e-mail lub login</label><input type="text" name="login" class="login-input" for="login-input"></div>
+                    <div style="height: 50px; margin-bottom: 40px;"><label for="passwd" style="margin-right: 95px;">Podaj hasło</label><input type="password" name="passwd" class="passwd" id="passwd"></div>
+                </div>
+                
+                <div class="container">
+                    <div style="height: 18px; width:18px; float: left;">
+                        <div name="rule" class="checkbox">
+                            <div class="check"><i class="fa fa-check" aria-hidden="true"></i></div>
+                        </div>
+                    </div>
+                    <span style="height: 50px; width:400px; float: left; margin-left: 20px;">Zapamiętaj hasło</span>
+                </div>
+                
+                <button class="zaloguj"> Zaloguj</button>
+            </form>
+        </div>
+        
+      <!-- Footer -->
+      <!--<footer class="stopka">
+        <h4>FOOTER</h4>
+        <p>Powered by <a href="" target="_blank">Magda Miller</a></p>
+      </footer>-->
+
+      <!-- End page content -->
+    </div>
+
+    <script>
+    $(document).ready(function() {
+        $(".checkbox").click(function(){
+                if($(this).attr('checked'))
+                {
+                    $(this).attr('checked', false);
+                    $(this).children().hide();
+                    $(this).css('border', '1px solid #a6a6a6');
+                }
+                else
+                {
+                    $(this).attr('checked', true);
+                    $(this).children().show();
+                    $(this).css('border', '2px solid #666666');
+                }
+            });
+    });
+</script>
+    
+</body>
+</html>
