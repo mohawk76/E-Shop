@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Banana-Shop.pl</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <link rel="stylesheet" href="styles/main-css.css">
+    <link rel="stylesheet" href="styles/basket-style.css">
+    
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+
+    <script type="text/jscript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</head>
+<style>
+html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
+</style>
+<body>
+<!-- Top container -->
+<div class="gornyBlok" style="z-index:4">
+    <button class="login">  Zaloguj</button>
+    <button class="register">  Rejestracja</button>
+</div>
+
+<!-- !PAGE CONTENT! -->
+
+    <div class="glownyStyl" >
+        <div class="background">
+            <h1 style="margin-top: 50px;">Twój koszyk</h1>
+            
+            <div class="productDiv">
+                <div class="productContainer">
+                    <img href="http://www.badania-medyczne.pl/wp-content/uploads/2015/09/warto_jesc_polskie_jablka.jpg?x73780" style="width: 70px; height: 70px;">
+                    <span style="clear: both"></span>
+                </div>
+                <div class="productContent">
+                    <span>
+                        Nazwa produktu
+                    </span>
+                    <button class="minus"><i class="fa fa-minus" aria-hidden="true"></i></button>
+                    <input type="text" class="iloscProduktow">
+                    <button class="plus"><i class="fa fa-plus" aria-hidden="true"></i></button>
+                    
+                    <span class="price">33,50 zł</span>
+                    
+                    <button class="delete"><i class="fa fa-times" aria-hidden="true"></i></button>
+                </div>
+            </div>
+            
+            <div class="totalPrice">
+                <span style="float: right;">Wartość zakupów: <span>33,50 zł</span></span>
+            </div>
+            <div style="clear: both"></div>
+            <div class="divPayment">
+                <button class="payment">Przejdź do płatności</button>
+            </div>
+            <div style="clear: both"></div>
+            <div class="continue">
+                <a  class="continueShopping" href="">kontynuuj zakupy</a>
+            </div>
+        </div>
+        
+      <!-- Footer -->
+      <!--<footer class="stopka">
+        <h4>FOOTER</h4>
+        <p>Powered by <a href="" target="_blank">Magda Miller</a></p>
+      </footer>-->
+
+      <!-- End page content -->
+    </div>
+    
+</body>
+</html>

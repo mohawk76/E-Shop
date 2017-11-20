@@ -1,0 +1,159 @@
+.background
+{
+    position: relative;
+    width: 50%;
+    height: auto;
+    background-color: #ffffff;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.login
+{
+    border: none;
+    display: inline-block;
+    height: 50px;
+    /*width: 120px;*/
+    float: right;
+    /*margin-right: 50px;*/
+    background-color:  #0e3758;
+    color: #f0f3e2;
+    font-weight: bold;
+    font-size: 16px;
+    outline: none;
+    font-family: raleway;
+}
+
+.login:hover
+{
+    cursor: pointer;
+    background-color: #0a2942;
+}
+
+.productDiv
+{
+    margin-top: 40px;
+}
+
+.plus
+{
+    outline: none;
+    border: none;
+    background-color: white;
+    cursor: pointer;
+    font-size: 18px;
+    margin-left: 20px;
+}
+
+.minus
+{
+    outline: none;
+    border: none;
+    background-color: white;
+    cursor: pointer;
+    font-size: 18px;
+    margin-left: 150px;
+}
+
+.iloscProduktow
+{
+    width: 40px;
+    height: 25px;
+    border-radius: 2px;
+    border: 1px solid #a6a6a6;
+    margin-left: 20px;
+}
+
+.delete
+{
+    font-size: 18px;
+    outline: none;
+    border: none;
+    background-color: white;
+    color: red;
+    cursor: pointer;
+    float: right;
+}
+
+.productContainer
+{
+    display: inline-block;
+    position: relative;
+    float: left;
+    width: 75px;
+    height: 75px;
+}
+
+.productContent
+{
+    width: 720px;
+    height: 65px;
+    position: relative;
+    padding-top: 10px;
+    margin-left: 100px;
+    margin-right: 10px;
+}
+
+.price
+{
+    margin-left: 160px;
+}
+
+.totalPrice
+{
+    float: right;
+    width: 300px;
+    height: 30px;
+    font-weight: 700;
+    margin-top: 50px;
+}
+
+.divPayment
+{
+    margin-top: 10px;
+    width: 220px;
+    height: 40px;
+    float: right;
+}
+
+.payment
+{
+    border: none;
+    background-color: #0e3758;
+    color: #f0f3e2;
+    font-weight: 500;
+    font-size: 16px;
+    outline: none;
+    font-family: raleway;
+    height: 40px;
+    width: 220px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.payment:hover
+{
+    background-color: #0a2942;
+}
+
+.continue
+{
+    width: 200px;
+    height: 20px;
+    font-size: 13px;
+    position: relative;
+    display: inline-block;
+    bottom: 30px;
+}
+
+.continueShopping
+{
+    text-decoration: none;
+    color: #0e3758;
+}
+
+.continueShopping:hover
+{
+    color: #0a2942;
+    text-decoration: underline;
+}
