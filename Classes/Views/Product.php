@@ -9,16 +9,16 @@ class Product extends \AnvilPHP\View
 		
 	}
 	
-	public function loadProducts(\Shop\Product\productsCollection $products, $templatePath)
+	public function loadProducts(\Shop\Product\productsCollection $products, $url, $templatePath)
 	{
 		if(!$products->isEmpty())
 		{
 			$result = "";
 			foreach ($products->toArray() as $displayed)
-			{					
-				$url = str_replace('{id}', $displayed->id, $this->generateUrl('addToCart', array('id' => '{id}')));
+			{
+				$generatedUrl = str_replace('{id}', $displayed->id, $url);
 				$template = (new \Shop\Product\ProductTemplate($templatePath))->setProduct($displayed);
-				$template->url = $url;
+				$template->url = $generatedUrl;
 				$result .= $template."\n";
 			}
 			return $result;

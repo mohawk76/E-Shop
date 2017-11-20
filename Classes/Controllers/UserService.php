@@ -127,15 +127,15 @@ class UserService extends \AnvilPHP\Controller
 	public function deleteUser()
 	{
 		$model = new \Shop\Models\UserService();
-		$view = new \Shop\Views\UserService();
+		$view = new \Shop\Views\UserService();		
 		
-		$user = $model->getUser($login);
-		if(count($user)==0)
+		if($model->deleteUser($id))
 		{
-			$view->renderHTML("Użytkownik nie istnieje");
-			die();
+			$view->renderHTML("Użytkownik został pomyślnie usunięty");
 		}
-		
-		
+		else 
+		{
+			$view->renderHTML("Nie udało się usunąć użytkownika");
+		}
 	}
 }

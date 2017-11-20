@@ -22,11 +22,6 @@
         public $description;
 		
 		/**
-		 * @var string
-		 */
-        public $company;
-		
-		/**
 		 * @var float
 		 */
         public $price;
@@ -50,25 +45,24 @@
 		 * @var float Holds previous price before discount
 		 */
 		public $oldPrice;
-				
+
 		/**
-		 * @var String holds url to action for product
+		 *
+		 * @var int holds product quantity in shoppingCart
 		 */
-		public $url='';
-		
+		public $quantity;
+
 		/**
 		 * Create product
 		 * @param string $name
 		 * @param string $description
-		 * @param string $company
 		 * @param float $price
 		 * @param string $imagePath
 		 */
-         public function __construct(int $id, string $name, string $description, string $company, float $price, string $imagePath, float $discount = 0) {
+         public function __construct(int $id, string $name, string $description, float $price, string $imagePath, float $discount = 0) {
 			$this->id = $id;
 			$this->name = $name;
             $this->description = $description;
-            $this->company = $company;
 			$this->oldPrice = $price;
             $this->price = ($price-($price*$discount));
             $this->imagePath = $imagePath;
@@ -98,10 +92,10 @@
 		 */
         public static function tryParse($array, &$result)
         {
-            if(count($array)!=6)
+            if(count($array)!=5)
                 return false;
            
-            $result = new product($array[0], $array[1], $array[2], $array[3], $array[4], $array[5]); 
+            $result = new product($array[0], $array[1], $array[2], $array[3], $array[4]); 
             
             return true;
         }

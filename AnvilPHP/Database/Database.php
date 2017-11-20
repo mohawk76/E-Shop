@@ -72,9 +72,13 @@ use \PDO;
 					$stmt = $this->database->exec($query);
 					return $stmt;
 				}
-				catch (Exception $ex)
+				catch (PDOException $e) 
 				{
-					throw $ex;
+					echo "DataBase Error: ".$e->getMessage();
+				}
+				catch (Exception $e) 
+				{
+					echo "General Error: ".$e->getMessage();
 				}
 			}
             

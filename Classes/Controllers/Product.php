@@ -40,6 +40,32 @@ class Product extends \AnvilPHP\Controller
 		$view->renderHTML("Dodano do koszyka!");
 	}
 	
+	public function changeQuantity()
+	{
+		$get = \AnvilPHP\Get::getInstance();
+		
+		if($get->get('id'))
+		{
+            $id = $get->get('id');
+        } 
+		else 
+		{
+            die();
+        }
+		
+		if($get->get('quantity'))
+		{
+            $quantity = $get->get('quantity');
+        } 
+		else 
+		{
+            die();
+        }
+		
+		$model = new \Shop\Models\Product();
+		$model->changeQuantity($id, $quantity);
+	}
+	
 	public function clearCart()
 	{
 		$model = new \Shop\Models\Product();
@@ -50,10 +76,9 @@ class Product extends \AnvilPHP\Controller
 	{
 		$get = \AnvilPHP\Get::getInstance();
 		
-		$id = $get->get('productID');
+		$id = $get->get('id');
 		
 		$model = new \Shop\Models\Product();
-		
 		$view = new \Shop\Views\Product();
 		
 		if(!$model->deleteFromCart($id))
@@ -62,15 +87,41 @@ class Product extends \AnvilPHP\Controller
 		}
 		else 
 		{
-			
 			$view->renderHTML("Produkt został usunięty z koszyka.");
 		}
 	}
 	
+	public function loadProductsFromCart()
+	{
+		$model = new \Shop\Models\Product();
+		$view = new \Shop\Views\Product();
+		
+		$products = $model->getProductsFromCart();
+		
+		$result['products'] = $view->loadProducts(
+				$products,
+				$this->generateUrl('deleteFromCart', array('id' => '{id}')),
+				"Templates/productCart.html");
+		
+		$result['sum'] = $products->getSumPrice();
+		
+		$view->renderJSON($result);
+	}
+
+
 	public function showCart()
 	{
-		$session = \AnvilPHP\Session::getInstance();
-		$session->ShoppingCart->Show();
+		$model = new \Shop\Models\Product();
+		$view = new \Shop\Views\Product();
+		
+		$template = new \AnvilPHP\Template("Templates/basket.html");
+		
+		$view->setTemplate($template);
+		
+		$view->products = $this->generateUrl('loadProductsCart');
+		$view->home = HTTP_SERVER;
+		
+		$view->renderTemplateHTML();
 	}
 	
 	public function loadProducts()
@@ -125,20 +176,48 @@ class Product extends \AnvilPHP\Controller
 		$pagination->setPage($page);
 		$pagination->setItemsPerPage(4);
 		
-		$products['products'] = $view->loadProducts($model->loadProducts(
-			$pagination->getItemsPerPage(),
-			($page-1)*$pagination->getItemsPerPage()), "Templates/productTemplate.html");//loads the HTML code of the products
+		$products['products'] = $view->loadProducts(
+			$model->getProducts(
+				$pagination->getItemsPerPage(),
+				($page-1)*$pagination->getItemsPerPage()),
+			$this->generateUrl('addToCart', array('id' => '{id}')),
+			"Templates/productTemplate.html");//loads the HTML code of the products
 		
 		$products['pagination'] = strval($pagination);//loads the HTML code of the pagination
 				
 		$view->renderJSON($products);//render json on page
 	}
 	
-	public function deleteProductToDB()
+	public function deleteProductFromDB()
 	{
+		$get = \AnvilPHP\Get::getInstance();
 		
+		$id = $get->get("id");
+		
+		if($id!=NULL)
+		{
+			$model = new \Shop\Models\Product();
+			$view = new \Shop\Views\Product();
+			
+			if(!$model->productExist($id))
+			{
+				$view->renderHTML("Produkt nie istnieje");
+				die();
+			}
+			
+			$success = $model->deleteProductFromDB($id);
+			
+			if($success)
+			{
+				$view->renderHTML("Produkt został usunięty z bazy.");
+			}
+			else 
+			{
+				$view->renderHTML("Nie udało się usunąć produktu.");
+			}
+		}		
 	}
-	
+
 	public function addProductToDB()
 	{
 		

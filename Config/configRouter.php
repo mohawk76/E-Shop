@@ -95,4 +95,34 @@ $collection->addItem(new AnvilPHP\Route(
     )
 ), 'register');
 
+$collection->addItem(new AnvilPHP\Route(
+    'deleteProduct',
+    array(
+        'file' => DIR_CONTROLLER.'Product.php',
+        'method' => 'deleteProductFromDB',
+        'class' => '\Shop\Controllers\Product'
+    )
+), 'deleteProduct');
+
+$collection->addItem(new AnvilPHP\Route(
+    'loadProductsCart',
+    array(
+        'file' => DIR_CONTROLLER.'Product.php',
+        'method' => 'loadProductsFromCart',
+        'class' => '\Shop\Controllers\Product'
+    )
+), 'loadProductsCart');
+
+$collection->addItem(new AnvilPHP\Route(
+    'changeQuantity/<id>?',
+    array(
+        'file' => DIR_CONTROLLER.'Product.php',
+        'method' => 'changeQuantity',
+        'class' => '\Shop\Controllers\Product'
+    ),
+    array(
+        'id' => '\d+'
+    )
+), 'changeQuantity');
+
 $router = new AnvilPHP\Router($_SERVER['REQUEST_URI'], $collection);

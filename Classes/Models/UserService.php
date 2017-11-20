@@ -16,6 +16,15 @@ class UserService extends \AnvilPHP\Model
 	
 	public function deleteUser($id)
 	{
-		return $this->database->sendQuery((new \AnvilPHP\Database\Delete('produkty'))->Where("id_produkt=$id"));
+		$result = $this->database->sendQuery((new \AnvilPHP\Database\Delete('produkty'))->Where("id_produkt=$id"));
+		
+		if($result == 1)
+		{
+			return TRUE;
+		}
+		else
+		{
+			return FALSE;
+		}
 	}
 }

@@ -78,4 +78,13 @@ final class productsCollection extends Collection{
         return $result;
     }
     
+	public function getSumPrice()
+	{
+		$sum = 0.0;
+		foreach($this->items as $item)
+		{
+			$sum += $item->price*$item->quantity;
+		}
+		return $sum;
+	}
 }

@@ -224,6 +224,14 @@ input::placeholder
     position: relative;
 }
 
+.basketIcon{
+	color: black !important;
+}
+
+.basketIcon2{
+	color: black !important;
+}
+
 .products{
 	margin-top: 50px!important;
     width: 1750px;

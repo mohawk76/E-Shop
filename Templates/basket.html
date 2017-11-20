@@ -5,17 +5,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     
-    <link rel="stylesheet" href="styles/main-css.css">
-    <link rel="stylesheet" href="styles/basket-style.css">
+    <link rel="stylesheet" href="CSS/main-css.css">
+    <link rel="stylesheet" href="CSS/basket-style.css">
     
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
 
-    <script type="text/jscript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/jscript" src="JS/jquery-3.2.1.min.js"></script>
 </head>
-<style>
-html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
-</style>
 <body>
 <!-- Top container -->
 <div class="gornyBlok" style="z-index:4">
@@ -24,32 +21,12 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
 </div>
 
 <!-- !PAGE CONTENT! -->
-
     <div class="glownyStyl" >
-        <div class="background">
+        <div class="background" style="box-sizing: border-box;">
             <h1 style="margin-top: 50px;">Twój koszyk</h1>
-            
-            <div class="productDiv">
-                <div class="productContainer">
-                    <img href="http://www.badania-medyczne.pl/wp-content/uploads/2015/09/warto_jesc_polskie_jablka.jpg?x73780" style="width: 70px; height: 70px;">
-                    <span style="clear: both"></span>
-                </div>
-                <div class="productContent">
-                    <span>
-                        Nazwa produktu
-                    </span>
-                    <button class="minus"><i class="fa fa-minus" aria-hidden="true"></i></button>
-                    <input type="text" class="iloscProduktow">
-                    <button class="plus"><i class="fa fa-plus" aria-hidden="true"></i></button>
-                    
-                    <span class="price">33,50 zł</span>
-                    
-                    <button class="delete"><i class="fa fa-times" aria-hidden="true"></i></button>
-                </div>
-            </div>
-            
+            <div id="products"></div>
             <div class="totalPrice">
-                <span style="float: right;">Wartość zakupów: <span>33,50 zł</span></span>
+                <span style="float: right;">Wartość zakupów: <span id="sum"> </span> zł</span>
             </div>
             <div style="clear: both"></div>
             <div class="divPayment">
@@ -57,7 +34,7 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
             </div>
             <div style="clear: both"></div>
             <div class="continue">
-                <a  class="continueShopping" href="">kontynuuj zakupy</a>
+                <a  class="continueShopping" href="[@home]">kontynuuj zakupy</a>
             </div>
         </div>
         
@@ -69,6 +46,77 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
 
       <!-- End page content -->
     </div>
-    
+<script>
+	function refreshCart()
+	{
+		$.ajax({
+			url: "[@products]",
+			success: function(result)
+			{
+				loadContent(result);
+			}
+		});
+	}
+	
+	$(document).ready(function(){
+		refreshCart();
+	});
+	
+	function loadContent(result)
+	{			
+		$('#products').html(result.products);
+		$('#sum').html(result.sum);
+		
+		$('.minus').each(function(){
+			if($(this).parent().find('.iloscProduktow').val()==1)
+			{
+				$(this).css("color", "#ccc");
+			}
+		});//If product quantity is 1 change color
+		
+		$('.plus').click(function(){
+			var id = $(this).parent().parent().attr('id');
+			var quantity = $(this).parent().find('.iloscProduktow').val();
+			changeQuantity(id, ++quantity);
+		});//end onClick plus
+		
+		$('.minus').click(function(){
+			var id = $(this).parent().parent().attr('id');
+			var quantity = $(this).parent().find('.iloscProduktow').val();
+			if(quantity > 1)
+				changeQuantity(id, --quantity);
+		});//end onClick minus
+		
+		$('.delete').click(function(event){
+			event.preventDefault();
+			$.ajax({
+				url: $(this).parent().attr('href'),
+				success: function(result)
+				{
+					refreshCart();
+				}
+			});
+		});
+		
+		$('.iloscProduktow').change(function(){
+			var id = $(this).parent().parent().attr('id');
+			 changeQuantity(id, $(this).val());
+		});
+		
+		function changeQuantity(productID, productQuantity)
+		{
+			$.ajax({
+				url: "changeQuantity/"+productID,
+				data: {
+					quantity: productQuantity
+				},
+				success: function() 
+				{
+                    refreshCart(); 
+                }
+			});
+		}
+	}
+</script>
 </body>
 </html>
