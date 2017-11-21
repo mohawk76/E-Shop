@@ -1,18 +1,27 @@
     <div class="productContainer">
-        <div class="productImage"><img alt=[@name] src=[@imagePath]></div>
-        <div class="productContent">
-            <div>
-                <a href="#"><span class="productTitle">[@name]</span></a>
-                <span style="float: right;">
-                    <a href="[@url]" id="addProductToCart" class="addProduct">Dodaj do koszyka!</a>
-                </span>
-                <span style="clear: both"></span>
+        <div>
+            <div class="productImage">
+                <img alt=[@name] src=[@imagePath]>
             </div>
-            <span class="producent">Producent: [@company]</span>
+            <div class="productContent">
+                <div class="description">
+                    <a href="#"><span class="productTitle">[@name]</span></a>
+                    <span style="clear: both"></span>
+                </div>
             
-            <div class=productDescription>Opis:</div>
-            <span>
-                [@description]
+                <div>
+                <div class=productDescription></div>
+                <span>
+                    [@description]
+                </span>
+                </div>
+            </div>
+            <span style="float: left;">
+                <a href="[@url]" id="addProductToCart" class="addProduct">
+                    <button class="circleCart" title="Dodaj do koszyka">
+                        <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                    </button>
+                </a>
             </span>
 			<div class="discount">[@discount]</div>
             <div class="productPrice">Cena: [@oldPrice] [@price] zł</div>

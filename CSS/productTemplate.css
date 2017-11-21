@@ -1,25 +1,27 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto');
 
 .productContainer{
-    width: 805px;
-    height: 200px;
+    width: 210px;
+    height: 450px;
     border-bottom: 1.2px solid #d5e0f2;
     padding: 10px;
 	position: relative;
 	margin-left: 20px;
+    margin-right: 20px;
 }
 
 .productContainer *{
     display: inline-block;
     font-family: 'Roboto', sans-serif;
-    font-weight: bold;
-	font-size: 18px;
+    font-weight: 500;
+	font-size: 14px;
 }
 
 .productImage{
     height: 200px;
     width: 210px;
     float: left;
+    border: 1px solid #ccc;
 }
 
 .productImage img{
@@ -28,17 +30,25 @@
 }
 
 .productContent{
-    width: 590px;
+    margin-top: 10px;
+    width: 200px;
     height: 200px;
     float: left;
 	margin-left: 5px;
     position: relative;
 }
 
+.description
+{
+    width: 210px;
+    height: 30px;
+}
+
 .productTitle{
     color: #01649a;
-	font-size: 20px;
+	font-size: 16px;
     text-decoration: none;
+    font-weight: 600;
 }
 
 .productTitle:hover{
@@ -54,23 +64,28 @@
 }
 
 .addProduct{
-    padding: 12px 28px;
-    border: none;
-    font-size: 16px;
-    background-color: #3cb8f2;
-    color: white;
-	text-decoration: none;
+    width: 35px;
+    height: 35px;
 }
 
-.addProduct:hover{
-    cursor: pointer;
-    background-color: #00a8f7;
-}
-
-.addproduct:visited
+.circleCart
 {
-	background-color: inherit;
-	color: inherit;
+    width: 35px;
+    height: 35px;
+    border-radius: 20px;
+    background-color: #bfbfbf;
+    outline: none;
+    border: none;
+}
+
+.circleCart:hover
+{
+    background-color: #0e3758;
+}
+
+.circleCart i
+{
+    color: #f7f7f7;
 }
 
 .discount{
@@ -84,9 +99,5 @@
     position: absolute;
     right: 0;
     bottom: 0;
-}
-
-.producent{
-    font-size: 15px;
-    margin-top: 5px;
+    font-size: 16px;
 }
