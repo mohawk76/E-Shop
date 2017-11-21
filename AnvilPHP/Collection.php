@@ -234,8 +234,14 @@ class Collection
 	 * @param mixed $key
 	 * @return mixed
 	 */
-	function findValueDim($value, $key)
+	function findValueDim($searchValue, $searchKey)
 	{
-		return (array_search($value, array_column($this->items, $key)));
+		foreach ($this->items as $key => $val)
+		{
+			if($val[$searchKey]==$searchValue)
+			{
+				return $key;
+			}
+		}
 	}
 }

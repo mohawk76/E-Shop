@@ -155,7 +155,7 @@ class UserService extends \AnvilPHP\Controller
 	public function logout()
 	{
 		$model = new \Shop\Models\UserService();
-		$model->deleteUserSession();
+		//$model->deleteUserSession();
 		header("Location: ".HTTP_SERVER);
 		die();
 	}
