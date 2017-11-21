@@ -1,7 +1,7 @@
 .background
 {
     position: relative;
-    width: 50%;
+    width: 65%;
     height: auto;
     background-color: #ffffff;
     margin: 0 auto;
@@ -35,6 +35,12 @@
     margin-top: 40px;
 }
 
+.quantityProducts
+{
+    width: 230px;
+    float: left;
+}
+
 .plus
 {
     outline: none;
@@ -52,7 +58,7 @@
     background-color: white;
     cursor: pointer;
     font-size: 18px;
-    margin-left: 150px;
+    margin-left: 0px;
 }
 
 .iloscProduktow
@@ -65,6 +71,13 @@
     margin-left: 20px;
 }
 
+.deleteProducts
+{
+    width: 100px;
+    height: 50px;
+    float: left;
+}
+
 .delete
 {
     font-size: 18px;
@@ -74,6 +87,7 @@
     color: red;
     cursor: pointer;
     float: right;
+    
 }
 
 .productContainer
@@ -87,7 +101,7 @@
 
 .productContent
 {
-    width: 720px;
+    width: 1050px;
     height: 65px;
     position: relative;
     padding-top: 10px;
@@ -95,9 +109,23 @@
     margin-right: 10px;
 }
 
+.productName
+{
+    width: 450px;
+    float: left;
+    padding-right: 15px;
+}
+
+.priceDiv
+{
+    width: 250px;
+    float: left;
+}
+
 .price
 {
-    margin-left: 160px;
+    margin-left: 0px;
+    float: right;
 }
 
 .totalPrice

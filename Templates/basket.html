@@ -75,13 +75,13 @@
 		});//If product quantity is 1 change color
 		
 		$('.plus').click(function(){
-			var id = $(this).parent().parent().attr('id');
+			var id = $(this).parent().parent().parent().attr('id');
 			var quantity = $(this).parent().find('.iloscProduktow').val();
 			changeQuantity(id, ++quantity);
 		});//end onClick plus
 		
 		$('.minus').click(function(){
-			var id = $(this).parent().parent().attr('id');
+			var id = $(this).parent().parent().parent().attr('id');
 			var quantity = $(this).parent().find('.iloscProduktow').val();
 			if(quantity > 1)
 				changeQuantity(id, --quantity);
