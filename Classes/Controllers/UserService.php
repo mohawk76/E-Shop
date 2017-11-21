@@ -13,12 +13,30 @@ class UserService extends \AnvilPHP\Controller
 	 * @param string $password
 	 * @return void
 	 */
-    public function login()
-    {
+	
+	public function login()
+	{		
+		$view = new \Shop\Views\UserService();
+		$model = new \Shop\Models\UserService();
+		
+		if($model->isLogged())
+		{
+			header("Location: ".HTTP_SERVER);
+			die();
+		}
+		
+		$template = new \AnvilPHP\Template("Templates/login.html");
+		
+		$view->setTemplate($template);
+		$view->renderTemplateHTML();
+	}
+			
+    public function actionLogin()
+    {	
 		$model = new \Shop\Models\UserService();
 		$view = new \Shop\Views\UserService();
 		
-		if(!isset(\AnvilPHP\Session::getInstance()->user))
+		if(!$model->isLogged())
 		{
 			$post = \AnvilPHP\Post::getInstance();
 
@@ -29,7 +47,7 @@ class UserService extends \AnvilPHP\Controller
 
 			if (count($user) > 0) 
 			{
-				if(password_hash($password, PASSWORD_BCRYPT) == $user[0]['Password']) 
+				if(/*password_hash($password, PASSWORD_BCRYPT)*/$password == $user[0]['Password']) 
 				{
 					\AnvilPHP\Session::getInstance()->user = new \AnvilPHP\User($user[0]['ID'], $user[0]['Login']);
 					$view->renderHTML("Zalagowano!");
@@ -51,23 +69,6 @@ class UserService extends \AnvilPHP\Controller
     }
 	
 	/**
-	 * Check that the user is logged in
-	 * @static
-	 * @return boolean
-	 */
-	public static function isLogged()
-	{
-		if(isset(Session::getInstance()->user))
-		{
-			return true;
-		}
-		else
-		{
-			return false;
-		}
-	}
-	
-	/**
 	 * Writes the user to the database
 	 * @param string $login
 	 * @param string $password
@@ -79,11 +80,17 @@ class UserService extends \AnvilPHP\Controller
 	 * @param string $address
 	 * @return void
 	 */
-	public function register()
+	public function actionRegister()
 	{
 		$model = new \Shop\Models\UserService();
 		$view = new \Shop\Views\UserService();
 		$post = \AnvilPHP\Post::getInstance();
+		
+		if($model->isLogged())
+		{
+			header("Location: ".HTTP_SERVER);
+			die();
+		}
 		
 		$userData = $post->get();
 		if(count($userData)==8)

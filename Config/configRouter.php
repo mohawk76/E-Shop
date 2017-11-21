@@ -96,6 +96,24 @@ $collection->addItem(new AnvilPHP\Route(
 ), 'register');
 
 $collection->addItem(new AnvilPHP\Route(
+    'actionLogin',
+    array(
+        'file' => DIR_CONTROLLER.'UserService.php',
+        'method' => 'actionLogin',
+        'class' => '\Shop\Controllers\UserService'
+    )
+), 'actionLogin');
+
+$collection->addItem(new AnvilPHP\Route(
+    'actionRegister',
+    array(
+        'file' => DIR_CONTROLLER.'UserService.php',
+        'method' => 'actionRegister',
+        'class' => '\Shop\Controllers\UserService'
+    )
+), 'actionRegister');
+
+$collection->addItem(new AnvilPHP\Route(
     'deleteProduct',
     array(
         'file' => DIR_CONTROLLER.'Product.php',
