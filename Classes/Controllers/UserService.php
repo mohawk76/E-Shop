@@ -47,7 +47,7 @@ class UserService extends \AnvilPHP\Controller
 
 			if (count($user) > 0) 
 			{
-				if(/*password_hash($password, PASSWORD_BCRYPT)*/$password == $user[0]['Password']) 
+				if(password_hash($password, PASSWORD_BCRYPT) == $user[0]['Password']) 
 				{
 					\AnvilPHP\Session::getInstance()->user = new \AnvilPHP\User($user[0]['ID'], $user[0]['Login']);
 					$view->renderHTML("Zalagowano!");
@@ -66,6 +66,8 @@ class UserService extends \AnvilPHP\Controller
 		{
 			$view->renderHTML("Użytkownik jest już zalogowany!");
 		}
+		header("Location: ".HTTP_SERVER);
+		die();
     }
 	
 	/**
@@ -129,8 +131,35 @@ class UserService extends \AnvilPHP\Controller
 				echo 'Nie udało się zarejestrować';
 			}
 		}
+		header("Location: ".HTTP_SERVER);
+		die();
 	}
 	
+	public function register()
+	{
+		$view = new \Shop\Views\UserService();
+		$model = new \Shop\Models\UserService();
+		
+		if($model->isLogged())
+		{
+			header("Location: ".HTTP_SERVER);
+			die();
+		}
+		
+		$template = new \AnvilPHP\Template("Templates/register.html");
+		
+		$view->setTemplate($template);
+		$view->renderTemplateHTML();
+	}
+	
+	public function logout()
+	{
+		$model = new \Shop\Models\UserService();
+		$model->deleteUserSession();
+		header("Location: ".HTTP_SERVER);
+		die();
+	}
+
 	public function deleteUser()
 	{
 		$model = new \Shop\Models\UserService();

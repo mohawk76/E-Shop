@@ -143,4 +143,13 @@ $collection->addItem(new AnvilPHP\Route(
     )
 ), 'changeQuantity');
 
+$collection->addItem(new AnvilPHP\Route(
+    'logout',
+    array(
+        'file' => DIR_CONTROLLER.'UserService.php',
+        'method' => 'logout',
+        'class' => '\Shop\Controllers\UserService'
+    )
+), 'logout');
+
 $router = new AnvilPHP\Router($_SERVER['REQUEST_URI'], $collection);

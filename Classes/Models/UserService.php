@@ -10,7 +10,7 @@ class UserService extends \AnvilPHP\Model
 	 */
 	public function isLogged()
 	{
-		if(isset(Session::getInstance()->user))
+		if(isset(\AnvilPHP\Session::getInstance()->user))
 		{
 			return true;
 		}
@@ -20,7 +20,12 @@ class UserService extends \AnvilPHP\Model
 		}
 	}
 	
-	public function getUser(string $login)
+	public function deleteUserSession()
+	{
+		\AnvilPHP\Session::getInstance()->destroy();
+	}
+
+		public function getUser(string $login)
 	{
 		return $this->database->sendQuery((new \AnvilPHP\Database\Select())->From('users')->Where('login = "'.$login.'"'));
 	}

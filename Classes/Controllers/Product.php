@@ -174,7 +174,7 @@ class Product extends \AnvilPHP\Controller
 		$pagination = new \AnvilPHP\Pagination($this->generateUrl('loadProductsPage', array('page' => '{page}')).$getValues);//create pagination and generate url for links
 		$pagination->setTotalItems($model->getTotalNumberProducts());
 		$pagination->setPage($page);
-		$pagination->setItemsPerPage(4);
+		$pagination->setItemsPerPage(5);
 		
 		$products['products'] = $view->loadProducts(
 			$model->getProducts(

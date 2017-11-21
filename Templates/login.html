@@ -63,9 +63,12 @@
         {
             var login = $.cookie('login');
             var password = $.cookie('password');
-            
+            $(".checkbox").attr('checked', true);
+			$(".checkbox").css('border', '2px solid #666666');
+			$(".checkbox").children().show();
             $('.login-input').val(login);
             $('#passwd').val(password);
+			$('.form-login input[name=\'rule\']').val('true');
         }
 		
         $(".checkbox").click(function(){
