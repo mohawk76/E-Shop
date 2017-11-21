@@ -13,12 +13,30 @@ class UserService extends \AnvilPHP\Controller
 	 * @param string $password
 	 * @return void
 	 */
-    public function login()
-    {
+	
+	public function login()
+	{		
+		$view = new \Shop\Views\UserService();
+		$model = new \Shop\Models\UserService();
+		
+		if($model->isLogged())
+		{
+			header("Location: ".HTTP_SERVER);
+			die();
+		}
+		
+		$template = new \AnvilPHP\Template("Templates/login.html");
+		
+		$view->setTemplate($template);
+		$view->renderTemplateHTML();
+	}
+			
+    public function actionLogin()
+    {	
 		$model = new \Shop\Models\UserService();
 		$view = new \Shop\Views\UserService();
 		
-		if(!isset(\AnvilPHP\Session::getInstance()->user))
+		if(!$model->isLogged())
 		{
 			$post = \AnvilPHP\Post::getInstance();
 
@@ -48,24 +66,9 @@ class UserService extends \AnvilPHP\Controller
 		{
 			$view->renderHTML("Użytkownik jest już zalogowany!");
 		}
+		header("Location: ".HTTP_SERVER);
+		die();
     }
-	
-	/**
-	 * Check that the user is logged in
-	 * @static
-	 * @return boolean
-	 */
-	public static function isLogged()
-	{
-		if(isset(Session::getInstance()->user))
-		{
-			return true;
-		}
-		else
-		{
-			return false;
-		}
-	}
 	
 	/**
 	 * Writes the user to the database
@@ -79,11 +82,17 @@ class UserService extends \AnvilPHP\Controller
 	 * @param string $address
 	 * @return void
 	 */
-	public function register()
+	public function actionRegister()
 	{
 		$model = new \Shop\Models\UserService();
 		$view = new \Shop\Views\UserService();
 		$post = \AnvilPHP\Post::getInstance();
+		
+		if($model->isLogged())
+		{
+			header("Location: ".HTTP_SERVER);
+			die();
+		}
 		
 		$userData = $post->get();
 		if(count($userData)==8)
@@ -122,8 +131,35 @@ class UserService extends \AnvilPHP\Controller
 				echo 'Nie udało się zarejestrować';
 			}
 		}
+		header("Location: ".HTTP_SERVER);
+		die();
 	}
 	
+	public function register()
+	{
+		$view = new \Shop\Views\UserService();
+		$model = new \Shop\Models\UserService();
+		
+		if($model->isLogged())
+		{
+			header("Location: ".HTTP_SERVER);
+			die();
+		}
+		
+		$template = new \AnvilPHP\Template("Templates/register.html");
+		
+		$view->setTemplate($template);
+		$view->renderTemplateHTML();
+	}
+	
+	public function logout()
+	{
+		$model = new \Shop\Models\UserService();
+		$model->deleteUserSession();
+		header("Location: ".HTTP_SERVER);
+		die();
+	}
+
 	public function deleteUser()
 	{
 		$model = new \Shop\Models\UserService();

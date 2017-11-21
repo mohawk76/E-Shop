@@ -11,17 +11,14 @@
     <link rel="stylesheet" media="(max-width: 959px)" href="large-screen-959.css">
     <link rel="stylesheet" media="(min-width: 960px)" href="large-screen-1920.css">
     
-    <link rel="stylesheet" href="styles/main-css.css">
-    <link rel="stylesheet" href="styles/register-style.css">
+    <link rel="stylesheet" href="CSS/main-css.css">
+    <link rel="stylesheet" href="CSS/register-style.css">
     
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
 
     <script type="text/jscript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 </head>
-<style>
-html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
-</style>
 <body>
 <!-- Top container -->
 <div class="gornyBlok" style="z-index:4">
@@ -33,7 +30,7 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
     <div class="glownyStyl" >
         <div class="background-form">
             <h3>Załóż konto</h3>
-            <form method="get" class="form-register">
+            <form method="post" class="form-register">
                 <div class="button">
                     <div style="height: 40px; margin-bottom: 0px; width:30px; float: left;">
                         <div class="radio-button" data-value="prywatny" id="personal">
@@ -64,7 +61,7 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
                     <div style="margin-bottom: 20px;">
                         <h4 style="margin-bottom: 0px;">Data urodzenia</h4>
                         <div style="height: 50px; margin-bottom: 10px; width:123px; float: left;">
-                            <input type="number" value="Dzień" placeholder="Dzień" name="day" class="day-year">
+                            <input type="number" placeholder="Dzień" name="day" class="day-year">
                         </div>
                     
                         <div style="height: 40px; width: 261px; margin-bottom: 10px; float: left;">
@@ -72,13 +69,13 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
                                 <span class="select"></span>
                                 <span class="select-arrow"><i class="fa fa-chevron-down" aria-hidden="true"></i></span>
                             <div class="selectMonths" >
-                                <span class="selectMonth" value="">Wszystkie działy</span>
+                                <span class="selectMonth">Wszystkie działy</span>
                             </div>      
                             </div>
                         </div>
                     
                     <div style=" height: 40px; width: 123px; margin-bottom: 10px; float: left; margin-left: 50px;">
-                        <input type="number" value="Rok" name="year" placeholder="Rok" class="day-year">
+                        <input type="number" name="year" placeholder="Rok" class="day-year">
                     </div>
                     </div>
                 
@@ -102,7 +99,7 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
                             <span class="selectC"></span>
                             <span class="select-arrow"><i class="fa fa-chevron-down" aria-hidden="true"></i></span>
                             <div class="selectMonths" >
-                                <span class="selectMonth" value="">Kraj</span>
+                                <span class="selectMonth">Kraj</span>
                             </div>      
                         </div>
                     </div>
@@ -125,7 +122,7 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
                 
                 <div class="container">
                     <div style="height: 18px; width:18px; float: left;">
-                        <div name="rule" class="checkbox">
+                        <div class="checkbox">
                             <div class="check"><i class="fa fa-check" aria-hidden="true"></i></div>
                         </div>
                     </div>

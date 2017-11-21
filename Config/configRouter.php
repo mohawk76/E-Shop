@@ -96,6 +96,24 @@ $collection->addItem(new AnvilPHP\Route(
 ), 'register');
 
 $collection->addItem(new AnvilPHP\Route(
+    'actionLogin',
+    array(
+        'file' => DIR_CONTROLLER.'UserService.php',
+        'method' => 'actionLogin',
+        'class' => '\Shop\Controllers\UserService'
+    )
+), 'actionLogin');
+
+$collection->addItem(new AnvilPHP\Route(
+    'actionRegister',
+    array(
+        'file' => DIR_CONTROLLER.'UserService.php',
+        'method' => 'actionRegister',
+        'class' => '\Shop\Controllers\UserService'
+    )
+), 'actionRegister');
+
+$collection->addItem(new AnvilPHP\Route(
     'deleteProduct',
     array(
         'file' => DIR_CONTROLLER.'Product.php',
@@ -124,5 +142,14 @@ $collection->addItem(new AnvilPHP\Route(
         'id' => '\d+'
     )
 ), 'changeQuantity');
+
+$collection->addItem(new AnvilPHP\Route(
+    'logout',
+    array(
+        'file' => DIR_CONTROLLER.'UserService.php',
+        'method' => 'logout',
+        'class' => '\Shop\Controllers\UserService'
+    )
+), 'logout');
 
 $router = new AnvilPHP\Router($_SERVER['REQUEST_URI'], $collection);

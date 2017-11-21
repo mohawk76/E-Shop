@@ -4,7 +4,28 @@ namespace Shop\Models;
 
 class UserService extends \AnvilPHP\Model
 {
-	public function getUser(string $login)
+	/**
+	 * Check that the user is logged in
+	 * @return boolean
+	 */
+	public function isLogged()
+	{
+		if(isset(\AnvilPHP\Session::getInstance()->user))
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+	
+	public function deleteUserSession()
+	{
+		\AnvilPHP\Session::getInstance()->destroy();
+	}
+
+		public function getUser(string $login)
 	{
 		return $this->database->sendQuery((new \AnvilPHP\Database\Select())->From('users')->Where('login = "'.$login.'"'));
 	}
