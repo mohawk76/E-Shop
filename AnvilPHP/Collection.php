@@ -243,5 +243,7 @@ class Collection
 				return $key;
 			}
 		}
+		
+		return false;
 	}
 }
