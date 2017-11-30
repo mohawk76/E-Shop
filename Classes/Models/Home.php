@@ -6,13 +6,13 @@ class Home extends \AnvilPHP\Model
 {
 	public function getSpanCategories()
 	{
-		$categories = $this->database->sendQuery('SELECT Nazwa, id_kategorii FROM kategorie;');
+		$categories = $this->database->sendQuery('SELECT Name, Category_ID FROM categories;');
 		$result = "";
 		
 		foreach($categories as $category) 
         {  
-			$element = new \AnvilPHP\HTMLGenerators\span($category['Nazwa']); 
-			$element->id = $category['id_kategorii'];
+			$element = new \AnvilPHP\HTMLGenerators\span($category['Name']); 
+			$element->id = $category['Category_ID'];
 			$element->class = "selectOption";
 			$result .= $element;
 		}
@@ -20,16 +20,21 @@ class Home extends \AnvilPHP\Model
 		return $result;
 	}
 	
-	public function getLinkCategories($url)
+	public function getLinkPlatform($url)
 	{
-		$categories = $this->database->sendQuery('SELECT Nazwa, id_kategorii FROM kategorie;');
-		$result = "";
+		$platforms = $this->database->sendQuery('SELECT Name, Platform_ID FROM platform;');
+		$result = array();
 		
-		foreach($categories as $category) 
+		$defualt = new \AnvilPHP\HTMLGenerators\a($url.'?platform=', "Wszystkie platformy");
+		$defualt->class = "subOpcja";
+		
+		$result[] = $defualt;
+		
+		foreach($platforms as $platform) 
         {  
-			$element = new \AnvilPHP\HTMLGenerators\a($url.'?category='.$category['id_kategorii'], $category['Nazwa']); 
+			$element = new \AnvilPHP\HTMLGenerators\a($url.'?platform='.$platform['Platform_ID'], $platform['Name']); 
 			$element->class = "subOpcja";
-			$result .= $element;
+			$result[] = $element;
 		}
 		
 		return $result;

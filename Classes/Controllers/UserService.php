@@ -40,16 +40,16 @@ class UserService extends \AnvilPHP\Controller
 		{
 			$post = \AnvilPHP\Post::getInstance();
 
-			$login = $post->filteredInput("login");
+			$login = $post->get("login");
 			$password = $post->get('password');
 
 			$user = $model->getUser($login);
-
+			
 			if (count($user) > 0) 
 			{
-				if(password_hash($password, PASSWORD_BCRYPT) == $user[0]['Password']) 
+				if(password_verify($password, $user[0]['Password']))
 				{
-					\AnvilPHP\Session::getInstance()->user = new \AnvilPHP\User($user[0]['ID'], $user[0]['Login']);
+					\AnvilPHP\Session::getInstance()->user = new \AnvilPHP\User($user[0]['ID'], $user[0]['E-mail']);
 					$view->renderHTML("Zalagowano!");
 				}
 				else 
@@ -66,8 +66,6 @@ class UserService extends \AnvilPHP\Controller
 		{
 			$view->renderHTML("Użytkownik jest już zalogowany!");
 		}
-		header("Location: ".HTTP_SERVER);
-		die();
     }
 	
 	/**
@@ -95,32 +93,15 @@ class UserService extends \AnvilPHP\Controller
 		}
 		
 		$userData = $post->get();
-		if(count($userData)==8)
-		{
-			if(strlen($userData['login']) > 32)
-			{
-				echo 'Za długi login';
-				die();
-			}
-			else if(strlen($userData['login']) < 6)
-			{
-				echo 'Za krótki login';
-				die();
-			}
-
-			if(strlen($userData['password']) < 6)
+		print_r($userData);
+		echo $userData['passwd'];
+			if(strlen($userData['passwd']) < 6)
 			{
 				echo 'Twoje hasło jest za krótkie"';
 				die();
 			}
 
-			if(filter_input($userData['email'], FILTER_VALIDATE_EMAIL))
-			{
-				echo 'Zły format e-mail\'a"';
-				die();
-			}
-
-			$password = password_hash($password, PASSWORD_BCRYPT);
+			$userData['passwd'] = password_hash($userData['passwd'], PASSWORD_BCRYPT);
 
 			if($model->addUser($userData)>0)
 			{
@@ -130,9 +111,6 @@ class UserService extends \AnvilPHP\Controller
 			{
 				echo 'Nie udało się zarejestrować';
 			}
-		}
-		header("Location: ".HTTP_SERVER);
-		die();
 	}
 	
 	public function register()
@@ -155,7 +133,7 @@ class UserService extends \AnvilPHP\Controller
 	public function logout()
 	{
 		$model = new \Shop\Models\UserService();
-		//$model->deleteUserSession();
+		$model->deleteUserSession();
 		header("Location: ".HTTP_SERVER);
 		die();
 	}

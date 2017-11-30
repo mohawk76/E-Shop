@@ -30,7 +30,7 @@
     <div class="glownyStyl" >
         <div class="background-form">
             <h3>Załóż konto</h3>
-            <form method="post" class="form-register">
+            <form method="post" action="actionRegister" class="form-register">
                 <div class="button">
                     <div style="height: 40px; margin-bottom: 0px; width:30px; float: left;">
                         <div class="radio-button" data-value="prywatny" id="personal">
@@ -65,11 +65,23 @@
                         </div>
                     
                         <div style="height: 40px; width: 261px; margin-bottom: 10px; float: left;">
+							<input type="hidden" name="month" id="month" value="1">
                             <div class="selectDiv">
-                                <span class="select"></span>
+                                <span class="select">Styczeń</span>
                                 <span class="select-arrow"><i class="fa fa-chevron-down" aria-hidden="true"></i></span>
                             <div class="selectMonths" >
-                                <span class="selectMonth">Wszystkie działy</span>
+                                <span id="1" class="selectMonth">Styczeń</span>
+                                <span id="2" class="selectMonth">Luty</span>
+                                <span id="3" class="selectMonth">Marzec</span>
+                                <span id="4" class="selectMonth">Kwiecień</span>
+                                <span id="5" class="selectMonth">Maj</span>
+                                <span id="6" class="selectMonth">Czerwiec</span>
+                                <span id="7" class="selectMonth">Lipiec</span>
+                                <span id="8" class="selectMonth">Sierpień</span>
+                                <span id="9" class="selectMonth">Wrzesień</span>
+                                <span id="10" class="selectMonth">Październik</span>
+                                <span id="11" class="selectMonth">Listopad</span>
+                                <span id="12" class="selectMonth">Grudzień</span>
                             </div>      
                             </div>
                         </div>
@@ -84,7 +96,7 @@
                 
                 <div id="companyForm"> <!-- TUTAJ JESTEM -->
                     
-                    <div style="height: 50px; margin-bottom: 40px;"><input type="email" placeholder="E-mail" name="e-mail" class="email"></div>
+                    <!--<div style="height: 50px; margin-bottom: 40px;"><input type="email" placeholder="E-mail" name="e-mail" class="email"></div>
                     
                     <div style="height: 50px; margin-bottom: 40px;"><input type="text" placeholder="Login" name="login" class="loginForm"></div>
                     
@@ -115,7 +127,7 @@
                     <div style="height: 50px; width:200px; float: left;">
                             <input type="number" placeholder="Kod pocztowy" name="postalCode" class="postalCode">
                     </div>
-                    <div style="height: 50px; width: 320px;margin-top: 0; float: left; position: relative;"><input type="text" placeholder="Miasto" name="city" class="city"></div>
+                    <div style="height: 50px; width: 320px;margin-top: 0; float: left; position: relative;"><input type="text" placeholder="Miasto" name="city" class="city"></div>-->
                     <div style="clear: both;"></div>
                 </div><!--KONIEC-->
                 
@@ -144,6 +156,8 @@
     
     <script>
         $(document).ready(function() {
+			enableSelectBoxes();
+			
             $(".radio-button").children().hide();
             $(".radio-button").children(":first").show();
             $(".radio-button:first").css("border", "2px solid #666666");
@@ -189,7 +203,43 @@
             });
         });
         
-        
+        function enableSelectBoxes(){
+			$('.selectDiv').each(function(){
+				$(this).children('.select').html($(this).children('.selectMonths').children('.selectMonth:first').html());
+				$(this).attr('value',$(this).children('.selectMonths').children('.selectMonth:first').attr('value'));
+
+				$(this).children('.select, .select-arrow').click(function(){
+					if($(this).parent().children('.selectMonths').css('display') == 'none'){
+						$(this).parent().children('.selectMonths').css('display','block');
+					}
+					else
+					{
+						$(this).parent().children('.selectMonths').css('display','none');
+					}
+					selectboxEvent();
+				});
+
+				$(this).find('.selectMonth').click(function(){
+					$(this).parent().css('display','none');
+					$(this).closest('.selectDiv').attr('value',$(this).attr('value'));
+					$(this).parent().siblings('.select').html($(this).html());
+					$('#month').val($(this).attr('id'));
+					selectboxEvent();
+				});
+			});				
+		}
+		
+		function selectboxEvent()
+		{
+		   if($('.select-arrow').children('i').attr('style')!='transform: rotate(180deg)') 
+		   {
+			   $('.select-arrow').children('i').attr('style','transform: rotate(180deg)');
+		   }
+		   else
+		   {
+			   $('.select-arrow').children('i').attr('style','');
+		   }
+		}
     </script>
 </body>
 </html>

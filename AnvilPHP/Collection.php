@@ -56,6 +56,14 @@ class Collection
         }
     }
 
+	public function addItems($array)
+	{
+		foreach ($array as $item)
+		{
+			$this->items[] = $item;
+		}
+	}
+	
 	/**
 	 * Delete item from collection
 	 * @param int|String $key

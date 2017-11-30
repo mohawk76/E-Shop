@@ -4,11 +4,11 @@ namespace Shop\Models;
 
 class Product extends \AnvilPHP\Model
 {
-	private $select = array("id_produkt", "Nazwa", "Opis", "Cena", "id_producent", "ID_Image");
+	private $select = array("GAME_ID", "Name", "Description", "Price", "ImagePath");
 	
 	public function getProductByID($id)
 	{
-		$query = (new \AnvilPHP\Database\Select("Nazwa", "Opis", "Cena", "id_producent", "ID_Image"))->From('produkty')->Where("id_produkt = $id");
+		$query = (new \AnvilPHP\Database\Select("Name", "Description", "Price", "ImagePath"))->From('games')->Where("GAME_ID = $id");
 		$builder = new \Shop\Product\ProductBuilder($this->database);
 		$product = $builder->createProduct($this->database->sendQuery($query)[0]);
 		
@@ -17,7 +17,7 @@ class Product extends \AnvilPHP\Model
 	
 	public function productExist($id)
 	{
-		$query = (new \AnvilPHP\Database\Select("COUNT(*) as ilosc"))->From('produkty')->Where("id_produkt = $id");
+		$query = (new \AnvilPHP\Database\Select("COUNT(*) as ilosc"))->From('games')->Where("GAME_ID = $id");
 		
 		if($this->database->sendQuery($query)[0]['ilosc']!=1)
 		{
@@ -32,20 +32,25 @@ class Product extends \AnvilPHP\Model
 		
 		$productName = $get->filteredInput('searched');
 		$productCategory = $get->filteredInput('category');
+		$productPlatform = $get->filteredInput('platform');
 
 	   //Create SearchEngine object and Generating search method's arguments
-		$search = new \AnvilPHP\SearchEngine($this->database, "produkty", $limit);
+		$search = new \AnvilPHP\SearchEngine($this->database, "games", $limit);
 		$searchArray= array();
 	
 	   if(!empty($productName))
 		{
-		   $searchArray[] = ("Nazwa LIKE ".'"%'.$productName.'%"');
+		   $searchArray[] = ("Name LIKE ".'"%'.$productName.'%"');
 		}
 		if(!empty($productCategory))
 		{
-			$searchArray[] =("id_kategorii = ".$productCategory);
+			$searchArray[] =("Category_ID = ".$productCategory);
 		}
-
+		if(!empty($productPlatform))
+		{
+			$searchArray[] = ("Platform_ID = $productPlatform");
+		}
+		
 		//Search and get result
 		$result = $search->search($this->select, $searchArray, array(), $dbOffset);
 		$products = new \Shop\Product\productsCollection();
@@ -66,19 +71,24 @@ class Product extends \AnvilPHP\Model
 		
 		$productName = $get->filteredInput('searched');
 		$productCategory = $get->filteredInput('category');
+		$productPlatform = $get->filteredInput('platform');
 		
 		$searchArray= array();
 		
 		if(!empty($productName))
 		{
-		   $searchArray[] = ("Nazwa LIKE ".'"%'.$productName.'%"');
+		   $searchArray[] = ("Name LIKE ".'"%'.$productName.'%"');
 		}
 		if(!empty($productCategory))
 		{
-			$searchArray[] =("id_kategorii = ".$productCategory);
+			$searchArray[] =("Category_ID = ".$productCategory);
+		}
+		if(!empty($productPlatform))
+		{
+			$searchArray[] =("Platform_ID = ".$productPlatform);
 		}
 		
-		$result = $this->database->sendQuery((new \AnvilPHP\Database\Select("COUNT(*) as ilosc"))->From("produkty")->Where($searchArray));
+		$result = $this->database->sendQuery((new \AnvilPHP\Database\Select("COUNT(*) as ilosc"))->From("games")->Where($searchArray));
 		
 		return $result[0]['ilosc'];
 	}
@@ -93,7 +103,7 @@ class Product extends \AnvilPHP\Model
 		
 		foreach ($shopingCart as $item)
 		{
-			$row = $this->database->sendQuery((new \AnvilPHP\Database\Select($this->select))->From('produkty')->Where("id_produkt = ".$item['ID']))[0];
+			$row = $this->database->sendQuery((new \AnvilPHP\Database\Select($this->select))->From('games')->Where("GAME_ID = ".$item['ID']))[0];
 			$product = $builder->createProduct($row);
 			$product->quantity = $item['Quantity'];
 			$products->addItem($product);
@@ -169,7 +179,7 @@ class Product extends \AnvilPHP\Model
 	
 	public function deleteProductFromDB($id)
 	{
-		$result = $this->database->sendQuery((new \AnvilPHP\Database\Delete('produkty'))->Where("id_produkt = $id"));
+		$result = $this->database->sendQuery((new \AnvilPHP\Database\Delete('games'))->Where("GAME_ID = $id"));
 		
 		if($result>0)
 		{

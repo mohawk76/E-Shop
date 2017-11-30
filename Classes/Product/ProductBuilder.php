@@ -29,17 +29,8 @@ class ProductBuilder {
 	 * @throws ErrorBuilderException
 	 */
 	public function createProduct(array $row)
-	{
-		if ($row["ID_Image"] != NULL) 
-        {
-            $imagePath = $this->connect->sendQuery((new \AnvilPHP\Database\Select('Path'))->From('images')->Where('id_image = '.$row['ID_Image']))[0]['Path'];
-        }
-        else
-        {
-            $imagePath = "";
-        }
-		
-		if(\Shop\Product\product::tryParse(array($row["id_produkt"], $row["Nazwa"], $row["Opis"], $row["Cena"], $imagePath), $item))
+	{	
+		if(\Shop\Product\product::tryParse(array($row["GAME_ID"], $row["Name"], $row["Description"], $row["Price"], $row["ImagePath"]), $item))
 		{
 			return $item;
 		}

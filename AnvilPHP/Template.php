@@ -88,7 +88,7 @@ class Template implements \AnvilPHP\HTMLGenerators\printerHTML{
 		
 		foreach ($templates as $template)//get single template from array
 		{
-			if(get_class($template) !== "Template")//Checks whether the object is a template
+			if(get_class($template) !== "AnvilPHP\Template")//Checks whether the object is a template
 			{
 				throw new \InvalidArgumentException(__METHOD__.' expects instance of template, you passed '.get_class($template));
 			}

@@ -63,9 +63,9 @@
 			$this->id = $id;
 			$this->name = $name;
             $this->description = $description;
-			$this->oldPrice = $price;
-            $this->price = ($price-($price*$discount));
-            $this->imagePath = $imagePath;
+			$this->oldPrice = number_format($price, 2, ',', ' ');
+            $this->price = number_format(($price-($price*$discount)), 2, ',', ' ');
+            $this->imagePath = DIR_IMAGES.$imagePath;
 			$this->discount = $discount;
 			
         }

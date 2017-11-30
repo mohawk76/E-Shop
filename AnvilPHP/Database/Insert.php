@@ -74,7 +74,7 @@ namespace AnvilPHP\Database;
 		{
 			if (count($this->values) != 0) 
             {
-                $result = 'VALUES '.$this->values[0];
+                $result = 'VALUES ('.$this->values[0];
                 foreach ($this->values as $arg) 
                 {
                     if($arg!=$this->values[0])
@@ -82,7 +82,7 @@ namespace AnvilPHP\Database;
                        $result .= ", ". $arg;
                     }
                 }
-                return $result;
+                return $result.")";
             } 
             else 
             {

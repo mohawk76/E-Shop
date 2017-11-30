@@ -103,7 +103,7 @@ class Product extends \AnvilPHP\Controller
 				$this->generateUrl('deleteFromCart', array('id' => '{id}')),
 				"Templates/productCart.html");
 		
-		$result['sum'] = $products->getSumPrice();
+		$result['sum'] = number_format($products->getSumPrice(), 2, ',', ' ');
 		
 		$view->renderJSON($result);
 	}
@@ -145,26 +145,18 @@ class Product extends \AnvilPHP\Controller
 		
 		if(isset($getValues[1]))//Check if there are any GET arguments
 		{
-			$getUrl = explode('&', $getValues[1]);//get each parameters
+			$getsUrl = explode('&', $getValues[1]);//get each parameters
 			
 			$getValues = '?'.$getValues[1]; //save GET arguments in $getValues
 			
-			if(!empty($get->get('searched')))//If the parameter is specified, it adds to the generated url
+			foreach ($getsUrl as $getUrl)
 			{
-				$products['url'] .= "&".$getUrl[0];
+				if(!empty($get->get(substr($getUrl, 0, strpos($getUrl, '=')))))
+				{
+					$products['url'] .= "&".$getUrl;
+				}
 			}
 			
-			if(!empty($get->get('category')))//If the parameter is specified, it adds to the generated url
-			{
-				if(empty($getUrl[1]))
-				{
-					$products['url'] .= "&".$getUrl[0];
-				}
-				else
-				{
-					$products['url'] .= "&".$getUrl[1];
-				}
-			}
 		}
 		else
 		{
@@ -174,7 +166,7 @@ class Product extends \AnvilPHP\Controller
 		$pagination = new \AnvilPHP\Pagination($this->generateUrl('loadProductsPage', array('page' => '{page}')).$getValues);//create pagination and generate url for links
 		$pagination->setTotalItems($model->getTotalNumberProducts());
 		$pagination->setPage($page);
-		$pagination->setItemsPerPage(5);
+		$pagination->setItemsPerPage(12);
 		
 		$products['products'] = $view->loadProducts(
 			$model->getProducts(

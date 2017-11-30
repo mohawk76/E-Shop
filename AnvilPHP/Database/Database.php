@@ -30,7 +30,7 @@ use \PDO;
         
         public function connect($dbType,$dbAdress, $dbLogin, $dbPassword, $dbName)
         {
-			$dsn = "$dbType:dbname=$dbName;host=$dbAdress";
+			$dsn = "$dbType:dbname=$dbName;host=$dbAdress;charset=utf8";
             try 
 			{
 				$this->database = new PDO($dsn, $dbLogin, $dbPassword);

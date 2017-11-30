@@ -3,7 +3,7 @@
 return [
 	'type' => 'mysql',
 	'host' => 'localhost',
-	'name' => 'test',
+	'name' => 'sklep',
 	'user' => 'root',
 	'pass' => '',
 ];

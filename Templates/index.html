@@ -22,8 +22,7 @@
 <!-- Top container -->
 <div class="gornyBlok" style="z-index:4">
     <button class="menu" onclick="w3_open();"><i class="fa fa-bars"></i>  Menu</button>
-    <a href="login"><button class="login">  Zaloguj</button></a>
-    <a href="register"><button class="register">  Rejestracja</button></a>
+	[@ui]
 </div>
 
 <div id="overlay-loading">
@@ -43,8 +42,8 @@
     </a>
     
   <div class="listMenu">
-    <a href="#" class="opcja"><i class="fa fa-exclamation-circle" aria-hidden="true"></i>  Nowości</a>
-    <a href="#" class="opcja"><i class="fa fa-heart" aria-hidden="true"></i>  Top10</a>
+    <a class="opcja"><i class="fa fa-exclamation-circle" aria-hidden="true"></i>  Nowości</a>
+    <a class="opcja"><i class="fa fa-heart" aria-hidden="true"></i>  Top10</a>
 	[@submenu]
   </div>
 </nav>
@@ -120,19 +119,6 @@ function w3_close() {
     mySidebar.style.width = "0";
     overlayBg.style.display = "none";
 }
-    
-$(".submenu").click(function()
-{
-	$submenu = $(this).parent().children().eq(1);
-    if($submenu.height()==0)
-        {
-            $submenu.height(300);
-        }
-    else
-    {
-        $submenu.height(0);
-    }
-});
 			
 function enableSelectBoxes(){
     $('div.selectBox').each(function(){
@@ -176,8 +162,62 @@ function enableSelectBoxes(){
 	{
 		page = getQueryVariable('page');
 	}
+	
+	window.addEventListener('popstate', function(event) {
+		if(event.state===null)
+			return;
+		var page = 1;
+		if(getQueryVariable('page'))
+		{
+			page = getQueryVariable('page');
+		}
 		
+		$.ajax({
+				url: "[@loadProductsURL]/"+page,
+				data: {
+					platform: getQueryVariable('platform'),
+					category: getQueryVariable('category'),
+					searched: getQueryVariable('searched')
+				},
+				success: function(result)
+				{
+					$("#overlay-loading").show();
+					if(getQueryVariable('category'))
+					{
+						var categoryName = $('.selectOptions #'+getQueryVariable('category')).text()
+						if(categoryName)
+							$('.selected').text(categoryName);
+					}
+					else
+					{
+						$('.selected').text("Wszystkie działy");
+					}
+
+					if(getQueryVariable('searched'))
+						$('#search').val(getQueryVariable('searched'));
+					else
+						$('#search').val('');
+					
+					loadContent(result);
+				}
+			});
+	}, false);
+	
 	$(document).ready(function(){
+		
+		$(".submenu").click(function()
+		{
+			$submenu = $(this).parent().children().eq(1);
+			if($submenu.height()==0)
+				{
+					$submenu.height(300);
+				}
+			else
+			{
+				$submenu.height(0);
+			}
+		});
+		
 		enableSelectBoxes();
 		$("#searchProducts").submit(function(event){
 			event.preventDefault(); 
@@ -185,13 +225,15 @@ function enableSelectBoxes(){
 			$.ajax({
 				url: $(this).attr('action'),
 				data: {
-					searched: $('#search').val(),
-					category: $('#categories').val()
+					platform: getQueryVariable('platform'),
+					category: $('#categories').val(),
+					searched: $('#search').val()
 				},
 				success: function(result)
 				{
 					$("#overlay-loading").show();
 					loadContent(result);
+					window.history.pushState("prev", "", result.url);
 				}
 			});
 		});
@@ -199,14 +241,16 @@ function enableSelectBoxes(){
 		$('.subOpcja').click(function(event)
 		{
 			event.preventDefault(); 
-			var categoryName = $(this).text();
 			$.ajax({
 				url: $(this).attr('href'),
 				success: function(result)
 				{
 					$("#overlay-loading").show();
-					$('.selected').text(categoryName);
+					$('.selected').text('Wszystkie działy');
+					$('input[name="selected"]').val('');
+					$('#search').val('');
 					loadContent(result);
+					window.history.pushState("prev", "", result.url);
 				}
 			});
 		});
@@ -214,8 +258,9 @@ function enableSelectBoxes(){
 		$.ajax({
 			url: "[@loadProductsURL]/"+page,
 			data:{
-					searched: $('.search').val(),
-					category: $('.category').attr('id')
+					platform: getQueryVariable('platform'),
+					category: getQueryVariable('category'),
+					searched: getQueryVariable('searched')
 			},
 			success: function(result)
 			{
@@ -226,8 +271,6 @@ function enableSelectBoxes(){
 	
 	function loadContent(result)
 	{
-		window.history.pushState("", "", result.url);
-		
 		$("#overlay-loading").fadeIn('normal', function(){
 			$(this).fadeOut();
 		});		
@@ -258,6 +301,7 @@ function enableSelectBoxes(){
 				{
 					$("#overlay-loading").show();
 					loadContent(result);
+					window.history.pushState("", "", result.url);
 				}
 			});
 		});
@@ -274,6 +318,7 @@ function enableSelectBoxes(){
 				return pair[1];
 			}
 		}
+		return "";
 	}
 </script>
 
