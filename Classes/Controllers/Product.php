@@ -103,7 +103,7 @@ class Product extends \AnvilPHP\Controller
 				$this->generateUrl('deleteFromCart', array('id' => '{id}')),
 				"Templates/productCart.html");
 		
-		$result['sum'] = number_format($products->getSumPrice(), 2, ',', ' ');
+		$result['sum'] = number_format(floatval($products->getSumPrice()), 2, ',', ' ');
 		
 		$view->renderJSON($result);
 	}

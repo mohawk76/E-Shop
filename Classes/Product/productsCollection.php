@@ -82,11 +82,12 @@ final class productsCollection extends Collection{
     
 	public function getSumPrice()
 	{
-        $sum = 0.0;
+        $sum = 0;
 		foreach($this->items as $item)
 		{
-			$sum += (float)$item->price * $item->quantity;
-		}
+            $price = floatval(str_replace(",", ".", $item->price));
+			$sum += $price * $item->quantity;
+        }
 		return $sum;
 	}
 }
