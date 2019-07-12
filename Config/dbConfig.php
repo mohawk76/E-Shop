@@ -5,7 +5,7 @@ return [
 	'host' => 'localhost',
 	'name' => 'sklep',
 	'user' => 'root',
-	'pass' => 'Kubax589',
+	'pass' => '',
 ];
 
 
