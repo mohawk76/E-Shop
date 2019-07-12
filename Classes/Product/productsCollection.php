@@ -2,6 +2,8 @@
 
 namespace Shop\Product;
 use AnvilPHP\Collection;
+use function PHPSTORM_META\type;
+
 /**
  * Contains products
  */
@@ -80,10 +82,10 @@ final class productsCollection extends Collection{
     
 	public function getSumPrice()
 	{
-		$sum = 0.0;
+        $sum = 0.0;
 		foreach($this->items as $item)
 		{
-			$sum += $item->price*$item->quantity;
+			$sum += (float)$item->price * $item->quantity;
 		}
 		return $sum;
 	}

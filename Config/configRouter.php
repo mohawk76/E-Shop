@@ -152,4 +152,4 @@ $collection->addItem(new AnvilPHP\Route(
     )
 ), 'logout');
 
-$router = new AnvilPHP\Router($_SERVER['REQUEST_URI'], $collection);
+AnvilPHP\Router::setCollection($collection);

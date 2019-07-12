@@ -42,7 +42,7 @@ class Router
 	/**
      * @param array $collection
      */
-    public function setCollection($collection)
+    public static function setCollection($collection)
     {
         Router::$collection = $collection;
     }
@@ -51,7 +51,7 @@ class Router
 	 * 
 	 * @return RouteCollection
 	 */
-    public function getCollection()
+    public static function getCollection()
     {
         return Router::$collection;
     }
@@ -145,7 +145,7 @@ class Router
         $url = str_replace(array_keys($params), $params, $url);
 		
         $url = preg_replace('/<\w+>/', '.*', $url);
-		
+        
         preg_match("#^$url$#", $this->url, $results);
         if ($results) {
             $this->url=str_replace(array($this->strlcs($url, $this->url)), array(''), $this->url);
